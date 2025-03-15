@@ -1,0 +1,288 @@
+/* Global Styles */
+body {
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.5;
+    color: #000;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 0.5in;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+}
+
+.header-left {
+    font-weight: bold;
+}
+
+.header-right {
+    text-align: right;
+}
+
+/* Section Styles */
+.section {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+/* Education Entry Styles */
+.education-entry {
+    margin-bottom: 15px;
+}
+
+.education-title {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.education-institution {
+    margin-top: 0;
+}
+
+/* Clinical Rotation Styles */
+.rotation-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.rotation-entry {
+    margin-bottom: 5px;
+}
+
+.rotation-title {
+    font-weight: bold;
+}
+
+/* Digital Portfolio Styles */
+.portfolio-section {
+    margin-top: 20px;
+}
+
+.portfolio-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.portfolio-category {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.portfolio-item {
+    margin-bottom: 3px;
+}
+
+/* Link Styles */
+a {
+    color: #00008B;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* About Me Section */
+.about-me {
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* CV Link */
+.cv-link {
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+/* Examinations Section */
+.exam-item {
+    margin-bottom: 3px;
+}
+
+/* Project Section */
+.project {
+    margin-bottom: 15px;
+}
+
+.project-title {
+    font-weight: bold;
+}
+
+.project-details {
+    padding-left: 20px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+
+/* PDF Export Button */
+.pdf-export {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #00008B;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border: none;
+    font-size: 14px;
+}
+
+.pdf-export:hover {
+    background-color: #000066;
+}
+
+/* Contact Buttons */
+.contact-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.contact-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #00008B;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: relative;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.contact-btn:hover {
+    background-color: #000066;
+    transform: scale(1.1);
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    visibility: hidden;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 10px;
+    right: 50px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.contact-btn:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* CV Container for Landing Page */
+.cv-container {
+    text-align: center;
+    padding: 50px 0;
+}
+
+/* Print Specific Styles */
+@media print {
+    body {
+        padding: 0;
+        margin: 0;
+        font-size: 11pt;
+        line-height: 1.3;
+    }
+    
+    .pdf-export, .contact-buttons {
+        display: none;
+    }
+    
+    @page {
+        size: letter;
+        margin: 0.5in;
+    }
+    
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    .header, .section-title {
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+    
+    .section {
+        margin-bottom: 10px;
+        page-break-inside: auto;
+    }
+    
+    .education-entry, .project, .rotation-entry {
+        page-break-inside: avoid;
+    }
+    
+    /* Reduce spacing for print */
+    .section-title {
+        margin-bottom: 3px;
+    }
+    
+    .education-entry {
+        margin-bottom: 8px;
+    }
+    
+    .rotation-entry, .portfolio-item, .exam-item {
+        margin-bottom: 2px;
+    }
+    
+    .portfolio-category {
+        margin-top: 5px;
+        margin-bottom: 2px;
+    }
+    
+    .project {
+        margin-bottom: 8px;
+    }
+    
+    .project-details {
+        padding-left: 15px;
+        margin-top: 1px;
+        margin-bottom: 5px;
+    }
+    
+    /* Optimize list spacing */
+    .rotation-list, .portfolio-list {
+        margin-top: 3px;
+        margin-bottom: 5px;
+    }
+    
+    /* Condense clinical rotations section */
+    .rotation-list {
+        columns: 2;
+        column-gap: 15px;
+    }
+    
+    /* Optimize about me section */
+    .about-me, .cv-link {
+        margin-bottom: 10px;
+    }
+} 
