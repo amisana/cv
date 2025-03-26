@@ -1,16 +1,41 @@
 /**
  * CV Platform - Core Application Architecture
  * 
- * A sophisticated, performance-optimized CV presentation system with:
+ * A sophisticated, performance-optimized CV presentation system that provides:
  * - Component-based architecture for maintainability
  * - Advanced PDF generation with multi-stage processing
  * - Responsive design with intelligent adaptation
  * - Progressive enhancement for optimal accessibility
+ * - Performance-optimized animations and transitions
+ * - Comprehensive error handling and recovery
+ * 
+ * @class CVPlatform
+ * @example
+ * // Initialize the platform
+ * const cvPlatform = new CVPlatform({
+ *   pdfQuality: 3,
+ *   enableIntersectionObserver: true,
+ *   enableProgressiveLoading: true,
+ *   debug: false
+ * });
  */
 class CVPlatform {
   /**
    * Initializes the comprehensive CV platform with advanced configuration
+   * 
    * @param {Object} config - Platform configuration options
+   * @param {number} [config.pdfQuality=3] - Quality setting for PDF generation (1-5)
+   * @param {number} [config.animationDuration=600] - Duration of animations in milliseconds
+   * @param {boolean} [config.enableProgressiveLoading=true] - Enable progressive content loading
+   * @param {boolean} [config.enableIntersectionObserver=true] - Enable intersection observer for animations
+   * @param {boolean} [config.debug=false] - Enable debug logging
+   * 
+   * @property {Object} config - Platform configuration with intelligent defaults
+   * @property {Object} components - Component registry for modular architecture
+   * @property {Object} state - System state management
+   * @property {Object} metrics - Performance metrics for optimization
+   * 
+   * @throws {Error} If required dependencies are not loaded
    */
   constructor(config = {}) {
     // Core system configuration with intelligent defaults
@@ -56,6 +81,24 @@ class CVPlatform {
   /**
    * Initializes the platform with comprehensive component initialization
    * and advanced feature detection
+   * 
+   * @private
+   * @method init
+   * 
+   * @description
+   * Performs the following initialization steps:
+   * 1. Measures initial load time for performance metrics
+   * 2. Detects browser capabilities for progressive enhancement
+   * 3. Initializes core components in optimal order:
+   *    - Content Manager
+   *    - Animation Controller
+   *    - Navigation
+   *    - PDF Generator
+   *    - Intro Animation
+   * 4. Sets up event listeners with proper delegation
+   * 5. Records performance metrics
+   * 
+   * @throws {Error} If component initialization fails
    */
   init() {
     console.info('Initializing CV Platform...');
@@ -84,6 +127,21 @@ class CVPlatform {
   /**
    * Detects browser capabilities for progressive enhancement
    * and optimal feature selection
+   * 
+   * @private
+   * @method detectFeatures
+   * 
+   * @description
+   * Checks for the following browser capabilities:
+   * - IntersectionObserver support for scroll-based animations
+   * - Print capability for PDF generation
+   * - Advanced canvas support for image processing
+   * - Modern JavaScript features
+   * 
+   * Updates this.config.features with detection results
+   * and adjusts configuration based on available features
+   * 
+   * @returns {void}
    */
   detectFeatures() {
     // Detect IntersectionObserver support
@@ -118,6 +176,17 @@ class CVPlatform {
   /**
    * Initializes the content management system for optimal
    * content presentation and section tracking
+   * 
+   * @private
+   * @method initializeContentManager
+   * 
+   * @description
+   * Sets up the content management system with:
+   * - Section tracking and metadata
+   * - Visibility state management
+   * - Section querying capabilities
+   * 
+   * @returns {void}
    */
   initializeContentManager() {
     this.components.contentManager = {
@@ -125,8 +194,13 @@ class CVPlatform {
       
       /**
        * Gets metadata for a specific section
-       * @param {HTMLElement} section - The section element
-       * @return {Object} Section metadata
+       * 
+       * @param {HTMLElement} section - The section element to analyze
+       * @returns {Object} Section metadata including:
+       * @returns {string} .title - The section's title text
+       * @returns {string} .id - The section's unique identifier
+       * @returns {HTMLElement} .element - The section DOM element
+       * @returns {boolean} .isVisible - Current visibility state
        */
       getSectionMetadata(section) {
         const title = section.querySelector('.section-title')?.textContent || '';
@@ -143,7 +217,16 @@ class CVPlatform {
       
       /**
        * Gets current visible sections based on scroll position
-       * @return {Array} Currently visible sections
+       * 
+       * @returns {Array<Object>} Array of visible section metadata objects
+       * @returns {string} [].title - Section title
+       * @returns {string} [].id - Section identifier
+       * @returns {HTMLElement} [].element - Section DOM element
+       * @returns {boolean} [].isVisible - Visibility state
+       * 
+       * @description
+       * Calculates which sections are currently visible in the viewport
+       * using getBoundingClientRect() for precise measurements
        */
       getVisibleSections() {
         return this.sections
@@ -166,11 +249,34 @@ class CVPlatform {
   /**
    * Initializes the animation controller for performance-optimized
    * entry animations and transitions
+   * 
+   * @private
+   * @method initializeAnimationController
+   * 
+   * @description
+   * Sets up the animation system with:
+   * - Intersection Observer for scroll-based animations
+   * - Staggered animation delays
+   * - Performance optimizations
+   * - Reduced motion support
+   * 
+   * @returns {void}
    */
   initializeAnimationController() {
     this.components.animationController = {
       /**
        * Sets up intersection observer for optimized animations
+       * 
+       * @private
+       * @method setupIntersectionObserver
+       * 
+       * @description
+       * Creates an IntersectionObserver to handle scroll-based animations:
+       * - Triggers animations when elements enter viewport
+       * - Handles intro animation completion state
+       * - Manages animation timing and sequencing
+       * 
+       * @returns {IntersectionObserver|null} The configured observer or null if not supported
        */
       setupIntersectionObserver: () => {
         if (!this.config.features.hasIntersectionObserver) return;
@@ -211,6 +317,17 @@ class CVPlatform {
       
       /**
        * Enables all animations immediately (used for PDF generation)
+       * 
+       * @private
+       * @method completeAllAnimations
+       * 
+       * @description
+       * Forces completion of all pending animations by:
+       * - Removing animation-ready classes
+       * - Adding animation-complete classes
+       * - Resetting transform and opacity states
+       * 
+       * @returns {void}
        */
       completeAllAnimations: () => {
         document.querySelectorAll('.animate-ready').forEach(el => {
@@ -232,6 +349,19 @@ class CVPlatform {
   /**
    * Initializes the navigation system with intelligent section tracking
    * and responsive behavior
+   * 
+   * @private
+   * @method initializeNavigation
+   * 
+   * @description
+   * Sets up the navigation system with:
+   * - Mobile-friendly navigation menu
+   * - Progress indicator
+   * - Section tracking
+   * - Smooth scrolling
+   * - Touch-optimized interactions
+   * 
+   * @returns {void}
    */
   initializeNavigation() {
     const mobileNavSections = document.getElementById('mobileNavSections');
@@ -251,6 +381,19 @@ class CVPlatform {
       
       /**
        * Updates the navigation state based on current scroll position
+       * 
+       * @private
+       * @method updateNavigationState
+       * 
+       * @description
+       * Updates navigation UI elements:
+       * - Progress indicator width
+       * - Active section highlighting
+       * - Mobile navigation state
+       * 
+       * Uses requestAnimationFrame for performance optimization
+       * 
+       * @returns {void}
        */
       updateNavigationState: () => {
         const scrollTop = window.scrollY;
@@ -288,6 +431,18 @@ class CVPlatform {
       
       /**
        * Builds the mobile navigation UI from section metadata
+       * 
+       * @private
+       * @method buildMobileNavigation
+       * 
+       * @description
+       * Creates mobile navigation menu with:
+       * - Section icons
+       * - Section titles
+       * - Click handlers
+       * - Visual feedback
+       * 
+       * @returns {void}
        */
       buildMobileNavigation: () => {
         if (!mobileNavSections) return;
@@ -363,12 +518,48 @@ class CVPlatform {
   /**
    * Initializes the PDF generation system with advanced rendering pipeline
    * and comprehensive error handling
+   * 
+   * @private
+   * @method initializePDFGenerator
+   * 
+   * @description
+   * Sets up the PDF generation system with:
+   * - High-quality rendering pipeline
+   * - Multi-stage processing
+   * - Progress tracking
+   * - Error recovery
+   * - UI state management
+   * 
+   * @returns {void}
    */
   initializePDFGenerator() {
     this.components.pdfGenerator = {
       /**
        * Generates a high-quality PDF with advanced processing pipeline
-       * @return {Promise<Blob>} The generated PDF as a blob
+       * 
+       * @public
+       * @method generatePDF
+       * 
+       * @description
+       * Generates a PDF document with the following steps:
+       * 1. Pre-processing:
+       *    - Completes all animations
+       *    - Hides UI elements
+       *    - Shows loading indicator
+       * 
+       * 2. Processing:
+       *    - Captures sections sequentially
+       *    - Optimizes image quality
+       *    - Handles page breaks
+       *    - Manages layout
+       * 
+       * 3. Post-processing:
+       *    - Restores UI state
+       *    - Updates metrics
+       *    - Handles errors
+       * 
+       * @returns {Promise<Blob|null>} The generated PDF as a blob, or null if generation fails
+       * @throws {Error} If critical errors occur during generation
        */
       generatePDF: async () => {
         if (this.state.isGeneratingPDF) {
@@ -528,6 +719,19 @@ class CVPlatform {
   
   /**
    * Initializes the intro animation system and handles animation events
+   * 
+   * @private
+   * @method initializeIntroAnimation
+   * 
+   * @description
+   * Sets up the intro animation system with:
+   * - Sequential text reveal
+   * - Skip functionality
+   * - Reduced motion support
+   * - Print media handling
+   * - Event management
+   * 
+   * @returns {void}
    */
   initializeIntroAnimation() {
     const introElement = document.querySelector('.intro-animation');
@@ -543,6 +747,19 @@ class CVPlatform {
       
       /**
        * Handles intro animation completion events
+       * 
+       * @private
+       * @method handleAnimationEnd
+       * 
+       * @param {AnimationEvent} event - The animation end event
+       * 
+       * @description
+       * Manages the completion of the intro animation:
+       * - Updates completion state
+       * - Removes animation element
+       * - Triggers post-intro tasks
+       * 
+       * @returns {void}
        */
       handleAnimationEnd: (event) => {
         if (event.animationName === 'fadeOutIntro') {
@@ -584,6 +801,17 @@ class CVPlatform {
   
   /**
    * Performs actions after the intro animation completes
+   * 
+   * @private
+   * @method triggerPostIntroTasks
+   * 
+   * @description
+   * Handles post-intro tasks:
+   * - Reveals main content
+   * - Triggers staggered animations
+   * - Updates UI state
+   * 
+   * @returns {void}
    */
   triggerPostIntroTasks() {
     // Reveal and animate the main content immediately after intro
@@ -597,6 +825,23 @@ class CVPlatform {
   
   /**
    * Skips the intro animation completely or advances to next phase
+   * 
+   * @public
+   * @method skipIntroAnimation
+   * 
+   * @description
+   * Provides two levels of skip functionality:
+   * 1. Advance to next phase:
+   *    - Skips quote animation
+   *    - Shows name/title immediately
+   *    - Shortens remaining animation
+   * 
+   * 2. Complete skip:
+   *    - Removes animation element
+   *    - Updates completion state
+   *    - Triggers post-intro tasks
+   * 
+   * @returns {boolean} True if animation was fully skipped, false if just advanced
    */
   skipIntroAnimation() {
     const introElement = document.querySelector('.intro-animation');
@@ -648,6 +893,41 @@ class CVPlatform {
   /**
    * Sets up optimized event listeners with proper throttling
    * and event delegation for performance
+   * 
+   * @private
+   * @method setupEventListeners
+   * 
+   * @description
+   * Configures all platform event listeners:
+   * 
+   * 1. Scroll Handling:
+   *    - Throttled scroll events
+   *    - Navigation state updates
+   *    - Progress indicator updates
+   * 
+   * 2. Resize Handling:
+   *    - Debounced resize events
+   *    - Responsive state updates
+   *    - Layout recalculation
+   * 
+   * 3. PDF Generation:
+   *    - Button click handling
+   *    - Intro animation completion check
+   *    - Error handling
+   * 
+   * 4. Keyboard Shortcuts:
+   *    - Escape key for intro skip
+   *    - Spacebar for quick skip
+   *    - Print shortcut (Ctrl+P)
+   * 
+   * 5. Quick Navigation:
+   *    - Scroll to top
+   *    - Scroll to bottom
+   * 
+   * All event listeners are optimized for performance and
+   * include proper cleanup and error handling
+   * 
+   * @returns {void}
    */
   setupEventListeners() {
     // Throttled scroll handler for optimal performance
