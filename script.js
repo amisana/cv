@@ -815,12 +815,72 @@ class CVPlatform {
    */
   triggerPostIntroTasks() {
     // Reveal and animate the main content immediately after intro
-    document.querySelectorAll('.animate-ready').forEach(element => {
-      // Add a small staggered delay for a nice reveal effect
-      setTimeout(() => {
-        element.classList.add('animate-in');
-      }, Math.random() * 200); // Random delay up to 200ms for natural effect
+    const animatableElements = document.querySelectorAll('.animate-ready');
+    
+    // Group elements by their type for more natural animation flow
+    const elementGroups = {
+      sections: [],
+      headings: [],
+      entries: [],
+      details: []
+    };
+    
+    // Categorize elements for grouped animations
+    animatableElements.forEach(element => {
+      if (element.classList.contains('section')) {
+        elementGroups.sections.push(element);
+      } else if (element.classList.contains('section-title') || element.tagName === 'H2' || element.tagName === 'H3') {
+        elementGroups.headings.push(element);
+      } else if (element.classList.contains('edu-entry') || 
+                element.classList.contains('exam-entry') || 
+                element.classList.contains('project') || 
+                element.classList.contains('rotation-entry') || 
+                element.classList.contains('tech-entry') || 
+                element.tagName === 'TR') {
+        elementGroups.entries.push(element);
+      } else {
+        elementGroups.details.push(element);
+      }
     });
+    
+    // Define animation timing variables
+    const baseDelay = 50;
+    const groupOffsets = {
+      sections: 0,
+      headings: 100,
+      entries: 200,
+      details: 300
+    };
+    
+    // Process each group with internal staggering
+    Object.entries(elementGroups).forEach(([groupName, elements]) => {
+      const groupOffset = groupOffsets[groupName];
+      
+      elements.forEach((element, index) => {
+        // Calculate delay based on group and position within group
+        // Use an easing function for more natural staggering (faster at start, slower at end)
+        const position = index / Math.max(elements.length, 1);
+        const easedPosition = position * position; // Simple quadratic easing
+        const maxGroupDelay = 300; // Cap the maximum delay within a group
+        const staggerDelay = Math.min(easedPosition * maxGroupDelay, maxGroupDelay);
+        
+        // Final delay combines base delay, group offset, and staggered position
+        const delay = baseDelay + groupOffset + staggerDelay;
+        
+        // Apply the animation with calculated delay
+        setTimeout(() => {
+          element.classList.add('animate-in');
+        }, delay);
+      });
+    });
+    
+    // Update UI state
+    this.state.isAnimating = false;
+    
+    // Log animation metrics
+    if (this.config.debug) {
+      console.info(`Post-intro animations triggered for ${animatableElements.length} elements`);
+    }
   }
   
   /**
@@ -847,33 +907,44 @@ class CVPlatform {
     const introElement = document.querySelector('.intro-animation');
     if (!introElement) return;
     
-    const introQuotePart1 = document.querySelector('.intro-quote-part1');
-    const introQuotePart2 = document.querySelector('.intro-quote-part2');
+    // Update selectors to handle all quote parts
+    const introQuoteParts = [
+      document.querySelector('.intro-quote-part1'),
+      document.querySelector('.intro-quote-part1-cont'),
+      document.querySelector('.intro-quote-part2'),
+      document.querySelector('.intro-quote-part2-cont')
+    ];
+    
     const introName = document.querySelector('.intro-name');
     const introTitle = document.querySelector('.intro-title');
     
+    // Check if any quote part is still showing
+    const isQuoteVisible = introQuoteParts.some(part => 
+      part && window.getComputedStyle(part).opacity > 0
+    );
+    
     // If quote is still showing, skip to name/title
-    if ((introQuotePart1 && window.getComputedStyle(introQuotePart1).opacity > 0) ||
-        (introQuotePart2 && window.getComputedStyle(introQuotePart2).opacity > 0)) {
+    if (isQuoteVisible) {
+      // Skip all quote parts at once
+      introQuoteParts.forEach(part => {
+        if (part) {
+          part.style.animation = 'none';
+          part.style.opacity = '0';
+        }
+      });
       
-      // Skip quote parts and show name/title immediately
-      if (introQuotePart1) {
-        introQuotePart1.style.animation = 'none';
-        introQuotePart1.style.opacity = '0';
+      // Show name and title immediately
+      if (introName) {
+        introName.style.animation = 'none';
+        introName.style.opacity = '1';
+        introName.style.transform = 'translateY(0)';
       }
       
-      if (introQuotePart2) {
-        introQuotePart2.style.animation = 'none';
-        introQuotePart2.style.opacity = '0';
+      if (introTitle) {
+        introTitle.style.animation = 'none';
+        introTitle.style.opacity = '1';
+        introTitle.style.transform = 'translateY(0)';
       }
-      
-      introName.style.animation = 'none';
-      introName.style.opacity = '1';
-      introName.style.transform = 'translateY(0)';
-      
-      introTitle.style.animation = 'none';
-      introTitle.style.opacity = '1';
-      introTitle.style.transform = 'translateY(0)';
       
       // Set a shorter timeout for the entire intro
       introElement.style.animationDelay = '1.5s';
