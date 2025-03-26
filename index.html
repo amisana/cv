@@ -2,230 +2,1498 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cameron Kiani, MD - Curriculum Vitae</title>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- External CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Base container styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            background-color: #fff;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0 20px;
+            border-bottom: 2px solid #000;
+            flex-wrap: wrap;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .header:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s ease;
+        }
+
+        .header-left:hover {
+            transform: translateY(-2px);
+        }
+
+        .header-right {
+            position: relative;
+            padding: 6px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .header-right:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .header a {
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .header a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -1px;
+            left: 0;
+            background-color: #000;
+            transition: width 0.3s ease;
+        }
+
+        .header a:hover:after {
+            width: 100%;
+        }
+
+        .header-icon {
+            margin-right: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .header a:hover .header-icon {
+            transform: translateY(-2px);
+        }
+
+        /* About me section */
+        .about-me {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+
+        /* Section styles */
+        .section {
+            margin: 25px 0;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+            padding-bottom: 4px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        /* EDUCATION SECTION SPECIFIC STYLES */
+        .education-section .edu-entry {
+            border-bottom: 1px solid #ddd;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .education-section .edu-entry:first-of-type {
+            border-top: 1px solid #ddd;
+        }
+
+        .education-section .edu-year {
+            font-weight: bold;
+        }
+
+        .education-section .edu-degree {
+            font-weight: bold;
+        }
+
+        .education-section .edu-institution {
+            margin-bottom: 2px;
+        }
+
+        /* Two-column layout for education entries */
+        @media (min-width: 768px) {
+            .education-section .edu-entry {
+                display: grid;
+                grid-template-columns: 120px 1fr;
+                grid-template-rows: auto auto;
+            }
+            
+            .education-section .edu-year {
+                grid-column: 1;
+                grid-row: 1 / span 2;
+                align-self: start;
+                padding-top: 5px;
+            }
+            
+            .education-section .edu-degree {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            
+            .education-section .edu-institution {
+                grid-column: 2;
+                grid-row: 2;
+            }
+        }
+
+        /* EXAMINATION SECTION SPECIFIC STYLES */
+        .exam-section .exam-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .exam-section .exam-entry {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 3px 0;
+        }
+
+        .exam-section .exam-entry:first-child,
+        .exam-section .exam-entry:nth-child(2) {
+            border-top: 1px solid #ddd;
+        }
+
+        .exam-section .exam-name {
+            font-weight: normal;
+        }
+
+        .exam-section .exam-score {
+            text-align: right;
+        }
+
+        /* CLINICAL ROTATIONS SECTION SPECIFIC STYLES */
+        .rotations-section table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .rotations-section tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .rotations-section tr:first-child {
+            border-top: 1px solid #ddd;
+        }
+
+        .rotations-section td {
+            padding: 3px 4px;
+            vertical-align: top;
+        }
+
+        .rotations-section td:last-child {
+            text-align: right;
+            width: 80px;
+        }
+
+        .rotations-section .rotation-title {
+            font-weight: normal;
+        }
+
+        /* DIGITAL PORTFOLIO SECTION SPECIFIC STYLES */
+        .portfolio-section .portfolio-category {
+            font-weight: bold;
+            margin: 15px 0 10px 0;
+        }
+
+        .portfolio-section table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .portfolio-section tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .portfolio-section tr:first-child {
+            border-top: 1px solid #ddd;
+        }
+
+        .portfolio-section td {
+            padding: 3px 4px;
+            vertical-align: top;
+        }
+
+        .portfolio-section td:first-child {
+            width: 180px;
+        }
+
+        /* PROJECTS SECTION SPECIFIC STYLES */
+        .projects-section .project {
+            margin-bottom: 15px;
+        }
+
+        .projects-section .project-title {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .projects-section .project-details {
+            margin-top: 3px;
+            padding-left: 20px;
+        }
+
+        .projects-section ul {
+            margin-top: 3px;
+            margin-bottom: 10px;
+        }
+
+        .projects-section li {
+            margin-bottom: 3px;
+        }
+
+        /* PROFESSIONAL LISTS SECTION SPECIFIC STYLES */
+        .professional-section .rotation-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 0;
+        }
+
+        .professional-section .rotation-entry {
+            margin-bottom: 3px;
+            padding: 3px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .professional-section .rotation-entry:first-child {
+            border-top: 1px solid #ddd;
+        }
+
+        /* TECHNOLOGY STACK SECTION SPECIFIC STYLES */
+        .tech-section .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .tech-section .tech-entry {
+            border-bottom: 1px solid #ddd;
+            padding: 5px 0;
+        }
+
+        .tech-section .tech-entry:first-child,
+        .tech-section .tech-entry:nth-child(2) {
+            border-top: 1px solid #ddd;
+        }
+
+        .tech-section .tech-category {
+            font-weight: bold;
+        }
+
+        .tech-section .tech-items {
+            margin-top: 2px;
+        }
+
+        /* Links */
+        a {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        /* PDF button */
+        .pdf-export {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #000;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: "Times New Roman", Times, serif;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pdf-export:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pdf-export:active {
+            transform: translateY(0);
+        }
+        
+        .pdf-export::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .pdf-export:hover::after {
+            left: 100%;
+        }
+        
+        /* PDF generation loading indicator */
+        .pdf-loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .pdf-loading-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #000;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .pdf-loading-text {
+            font-size: 1.2rem;
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+                font-size: 11pt;
+                line-height: 1.3;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .pdf-export {
+                display: none;
+            }
+            
+            a {
+                text-decoration: none;
+            }
+            
+            .header, .section-title {
+                page-break-inside: avoid;
+                page-break-after: avoid;
+            }
+            
+            .section {
+                margin-bottom: 10px;
+                page-break-inside: auto;
+            }
+            
+            .education-entry, .project, .rotation-entry {
+                page-break-inside: avoid;
+            }
+            
+            /* Reduce spacing for print */
+            .section-title {
+                margin-bottom: 3px;
+            }
+            
+            .education-entry {
+                margin-bottom: 8px;
+            }
+            
+            .rotation-entry, .portfolio-item, .exam-item {
+                margin-bottom: 2px;
+            }
+            
+            .portfolio-category {
+                margin-top: 5px;
+                margin-bottom: 2px;
+            }
+            
+            .project {
+                margin-bottom: 8px;
+            }
+            
+            .project-details {
+                padding-left: 15px;
+                margin-top: 1px;
+                margin-bottom: 5px;
+            }
+            
+            /* Optimize list spacing */
+            .rotation-list, .portfolio-list {
+                margin-top: 3px;
+                margin-bottom: 5px;
+            }
+            
+            /* Condense clinical rotations section */
+            .rotation-list {
+                columns: 2;
+                column-gap: 15px;
+            }
+            
+            /* Optimize about me section */
+            .about-me, .cv-link {
+                margin-bottom: 10px;
+            }
+        }
+        
+        table {
+            width: 100%;
+            border-spacing: 0;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        
+        td {
+            padding: 2px 10px 2px 0;
+            vertical-align: top;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Mobile Navigation Styles */
+        .mobile-nav-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #000;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 999;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+        
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-nav-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .mobile-nav-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-close:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-nav-sections {
+            padding: 20px;
+        }
+        
+        .mobile-nav-section {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mobile-nav-section:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-nav-section.active {
+            background-color: rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+        
+        .mobile-nav-icon {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background-color: #000;
+            z-index: 1001;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+        
+        /* Quick jump buttons */
+        .quick-nav {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 998;
+        }
+        
+        .quick-nav-button {
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-top: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+        
+        .quick-nav-button:hover {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+        
+        /* Section highlight effect */
+        .section.highlight {
+            animation: highlight 2s ease;
+        }
+        
+        @keyframes highlight {
+            0% { background-color: rgba(255, 255, 0, 0.2); }
+            100% { background-color: transparent; }
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 767px) {
+            .mobile-nav-toggle, .quick-nav {
+                display: block;
+            }
+            
+            .mobile-nav {
+                display: block;
+            }
+            
+            .container {
+                padding-bottom: 80px; /* Space for fixed nav button */
+            }
+            
+            /* Improve touch targets on mobile */
+            .edu-entry, .exam-entry, .rotation-entry, .project, td, .portfolio-section a {
+                padding: 8px 0;
+            }
+            
+            .portfolio-section a, .projects-section a {
+                display: inline-block;
+                padding: 3px 0;
+            }
+            
+            /* Adjust section titles for mobile */
+            .section-title {
+                font-size: 1.1rem;
+                padding-top: 10px;
+            }
+            
+            /* Improve table readability on mobile */
+            .rotations-section td:last-child {
+                width: 60px;
+            }
+        }
+    </style>
+    <!-- Intersection Observer for scroll animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create the Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Add the animation class when element is visible
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                        // Unobserve after animation is triggered
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null, // viewport
+                threshold: 0.15, // trigger when 15% of the element is visible
+                rootMargin: '0px 0px -50px 0px' // slight offset to trigger earlier
+            });
+            
+            // Observe all section elements
+            document.querySelectorAll('.section').forEach(section => {
+                // Add the pre-animation class
+                section.classList.add('animate-ready');
+                // Observe the section
+                observer.observe(section);
+            });
+            
+            // Observe individual entries within sections
+            const animatableElements = document.querySelectorAll('.edu-entry, .exam-entry, .project, .rotation-entry, .tech-entry, tr');
+            animatableElements.forEach((element, index) => {
+                // Add the pre-animation class with staggered delay
+                element.classList.add('animate-ready');
+                element.style.transitionDelay = `${index % 5 * 50}ms`;
+                // Observe the element
+                observer.observe(element);
+            });
+        });
+    </script>
+    <style>
+        /* Animation styles */
+        .animate-ready {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Disable animations for users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .animate-ready {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+        
+        /* Disable animations for print */
+        @media print {
+            .animate-ready {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+    </style>
+    
+    <!-- Intro Animation Styles -->
+    <style>
+        /* Intro Animation Styles */
+        .intro-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeOutIntro 0.8s ease forwards;
+            animation-delay: 6.8s;
+        }
+        
+        .intro-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 30px;
+        }
+        
+        .intro-quote-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .intro-quote-part1, .intro-quote-part2 {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            line-height: 1.5;
+        }
+        
+        .intro-quote-part1 {
+            animation: fadeInElement 0.8s ease forwards, fadeOutElement 0.8s ease forwards;
+            animation-delay: 0.3s, 4.3s;
+        }
+        
+        .intro-quote-part2 {
+            animation: fadeInElement 0.8s ease forwards, fadeOutElement 0.8s ease forwards;
+            animation-delay: 2s, 4.3s;
+        }
+        
+        .intro-name {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInElement 0.8s ease forwards;
+            animation-delay: 5s;
+        }
+        
+        .intro-title {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: fadeInElement 0.8s ease forwards;
+            animation-delay: 5.5s;
+        }
+        
+        .intro-hint {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 0.8rem;
+            opacity: 0;
+            animation: pulseHint 2s ease-in-out infinite;
+            animation-delay: 6s;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(0, 0, 0, 0.5);
+        }
+        
+        @keyframes pulseHint {
+            0% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 0.3;
+            }
+        }
+        
+        @keyframes fadeInElement {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeOutElement {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes fadeOutIntro {
+            from {
+                opacity: 1;
+                visibility: visible;
+            }
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
+        /* Mobile styles for intro animation */
+        @media (max-width: 767px) {
+            .intro-quote-part1, .intro-quote-part2 {
+                font-size: 1rem;
+                line-height: 1.4;
+                margin-bottom: 1.5rem;
+            }
+            
+            .intro-name {
+                font-size: 2rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .intro-title {
+                font-size: 1.2rem;
+            }
+            
+            .intro-hint {
+                font-size: 0.8rem;
+            }
+            
+            .intro-content {
+                padding: 0 20px;
+            }
+        }
+        
+        /* Hide intro animation for print */
+        @media print {
+            .intro-animation {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-left">
-            Cameron Kiani, MD | <a href="mailto:cameron@kianimd.com">cameron@kianimd.com</a>
-        </div>
-        <div class="header-right">
-            For complete CV go to <a href="https://OCCMED.AI">OCCMED.AI</a>
-        </div>
-    </div>
-
-    <div class="about-me">
-        <strong>About Me:</strong> Dr. Cameron Kiani, MD, is an early-career Occupational & Environmental Medicine physician trainee. He is currently completing his residency and MPH at the Mount Sinai School of Medicine. His anticipated completion date is July 2025. Academic/Medicine focused experiences below.
-    </div>
-
-    <div class="section">
-        <div class="section-title">Education & Training</div>
-        
-        <div class="education-entry">
-            <div class="education-title">Bachelor of Arts, Psychology | August 2011 - December 2014</div>
-            <p class="education-institution">University of Pennsylvania, Philadelphia, PA</p>
-        </div>
-        
-        <div class="education-entry">
-            <div class="education-title">Doctor of Medicine (M.D.) | August 2015 - April 2020</div>
-            <p class="education-institution">Icahn School of Medicine at Mount Sinai | New York, NY | Research Year 2017-2018 (Funded)</p>
-        </div>
-        
-        <div class="education-entry">
-            <div class="education-title">Residency in Psychiatry | August 2020 – August 2022</div>
-            <p class="education-institution">Montefiore /Albert Einstein School of Medicine, Bronx, NY | Department of Psychiatry and Behavioral Science</p>
-        </div>
-        
-        <div class="education-entry">
-            <div class="education-title">Residency in Occupational & Environmental Medicine (OEM) | July 2023 – Present</div>
-            <p class="education-institution">Anticipated Completion: June 2025 | Mount Sinai School of Medicine, New York, NY</p>
-        </div>
-        
-        <div class="education-entry">
-            <div class="education-title">Master of Public Health (MPH) | July 2023 - Present</div>
-            <p class="education-institution">Anticipated Completion: June 2025 | Mount Sinai School of Medicine, New York, NY</p>
+    <!-- Progress indicator -->
+    <div class="progress-indicator"></div>
+    
+    <!-- Intro Animation Overlay -->
+    <div class="intro-animation">
+        <div class="intro-content">
+            <div class="intro-quote-container">
+                <div class="intro-quote-part1">"One of the essential qualities of the clinician is interest in humanity,</div>
+                <div class="intro-quote-part2">for the secret of the care of the patient is in caring for the patient."</div>
+            </div>
+            <div class="intro-name">Cameron Kiani, MD</div>
+            <div class="intro-title">Occupational Medicine Doctor</div>
+            <div class="intro-hint">Click to continue</div>
         </div>
     </div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <span class="name">Cameron Kiani, MD</span> | <a href="mailto:cameron@kianimd.com"><i class="fas fa-envelope header-icon"></i>cameron@kianimd.com</a>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-globe header-icon"></i> Complete CV at <a href="https://OCCMED.AI/education">OCCMED.AI</a>
+            </div>
+        </div>
 
-    <div class="section">
-        <div class="section-title">Examinations</div>
-        <table>
-            <tr><td>Step 1 Basic Sciences</td><td>240 (Pass)</td></tr>
-            <tr><td>Step 2 Clinical Knowledge</td><td>263 (Pass)</td></tr>
-            <tr><td>Step 2 Clinical Skills</td><td>Pass</td></tr>
-            <tr><td>Step 3</td><td>Pass</td></tr>
-        </table>
-    </div>
+        <div class="about-me">
+            <strong>About Me:</strong> Dr. Cameron Kiani, MD, is an early-career Occupational & Environmental Medicine physician trainee. He is currently completing his residency and MPH at the Mount Sinai School of Medicine. His anticipated completion date is July 2025. Academic/Medicine focused experiences below.
+        </div>
 
-    <div class="section">
-        <div class="section-title">Clinical Rotations Successfully Completed to Date | Mount Sinai OEM Residency Program</div>
-        <table>
-            <tr><td><span class="rotation-title">Selikoff Center for Occupational Medicine</span></td><td>Ongoing</td></tr>
-            <tr><td><span class="rotation-title">NIOSH Occupational Health/Medicine Rotation/Scholarship</span></td><td>Upcoming</td></tr>
-            <tr><td><span class="rotation-title">Memorial Sloan Kettering Cancer Center Occupational Health</span></td><td>2 M (Present)</td></tr>
-            <tr><td><span class="rotation-title">WTC Monitoring & Treatment at Selikoff Center</span></td><td>1 M</td></tr>
-            <tr><td><span class="rotation-title">Metropolitan Transit Authority (MTA) Occupational Health</span></td><td>3 M</td></tr>
-            <tr><td><span class="rotation-title">NYC DOH WTC Registry</span></td><td>2 M</td></tr>
-            <tr><td><span class="rotation-title">MSSM Ambulatory Pulmonology and Respiratory Institute</span></td><td>1 M</td></tr>
-            <tr><td><span class="rotation-title">MSSM Musculoskeletal Radiology</span></td><td>1 M</td></tr>
-            <tr><td><span class="rotation-title">MSSM Physical Medicine & Rehabilitation</span></td><td>2 M</td></tr>
-            <tr><td><span class="rotation-title">New York Occupational Safety and Health Administration</span></td><td>2 M</td></tr>
-            <tr><td><span class="rotation-title">Con Edison, Employee Health Center</span></td><td>2 M</td></tr>
-            <tr><td><span class="rotation-title">Pediatric Environmental Health Specialty Units</span></td><td>1 M</td></tr>
-            <tr><td><span class="rotation-title">Lifestyle Medicine Elective</span></td><td>1 M (Remote)</td></tr>
-            <tr><td><span class="rotation-title">BASF Occupational & Environmental Medicine Course</span></td><td>2 M (Remote)</td></tr>
-            <tr><td><span class="rotation-title">Acute Inpatient Psychiatry</span></td><td>4 M</td></tr>
-            <tr><td><span class="rotation-title">Emergency Psychiatry</span></td><td>2 M</td></tr>
-            <tr><td><span class="rotation-title">Inpatient Medicine</span></td><td>3 M</td></tr>
-            <tr><td><span class="rotation-title">Ambulatory Medicine</span></td><td>1 M</td></tr>
-            <tr><td><span class="rotation-title">Neurology (Inpatient & Consult)</span></td><td>2 M</td></tr>
-        </table>
-    </div>
+        <div class="section education-section">
+            <div class="section-title">Education & Training</div>
+            
+            <div class="edu-entry">
+                <div class="edu-year">2011-2014</div>
+                <div class="edu-degree">B.A. Psychology</div>
+                <div class="edu-institution">University of Pennsylvania, Philadelphia, PA | Phi Beta Kappa</div>
+            </div>
+            
+            <div class="edu-entry">
+                <div class="edu-year">2015-2020</div>
+                <div class="edu-degree">M.D.</div>
+                <div class="edu-institution">Icahn School of Medicine at Mount Sinai, New York, NY</div>
+            </div>
 
-    <div class="section portfolio-section">
-        <div class="section-title">Digital Portfolio</div>
+            <div class="edu-entry">
+                <div class="edu-year">2020-2021</div>
+                <div class="edu-degree">Internship</div>
+                <div class="edu-institution">Montefiore/Albert Einstein School of Medicine, Bronx, NY</div>
+            </div>
+            
+            <div class="edu-entry">
+                <div class="edu-year">2021-2022</div>
+                <div class="edu-degree">Residency in Psychiatry</div>
+                <div class="edu-institution">Montefiore/Albert Einstein School of Medicine, Bronx, NY</div>
+            </div>
+            
+            <div class="edu-entry">
+                <div class="edu-year">2023-Present</div>
+                <div class="edu-degree">Residency in OEM</div>
+                <div class="edu-institution">Mount Sinai School of Medicine, New York, NY (Anticipated Completion: June 2025)</div>
+            </div>
+            
+            <div class="edu-entry">
+                <div class="edu-year">2023-Present</div>
+                <div class="edu-degree">M.P.H.</div>
+                <div class="edu-institution">Mount Sinai School of Medicine, New York, NY (Anticipated Completion: June 2025)</div>
+            </div>
+        </div>
+
+        <div class="section exam-section">
+            <div class="section-title">Examinations</div>
+            
+            <div class="exam-grid">
+                <div class="exam-entry">
+                    <div class="exam-name">Step 1 Basic Sciences</div>
+                    <div class="exam-score">240</div>
+                </div>
+                
+                <div class="exam-entry">
+                    <div class="exam-name">Step 2 Clinical Knowledge</div>
+                    <div class="exam-score">263</div>
+                </div>
+                
+                <div class="exam-entry">
+                    <div class="exam-name">Step 2 Clinical Skills</div>
+                    <div class="exam-score">Pass</div>
+                </div>
+                
+                <div class="exam-entry">
+                    <div class="exam-name">Step 3</div>
+                    <div class="exam-score">Pass</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section rotations-section">
+            <div class="section-title">Clinical Rotations Successfully Completed to Date | Mount Sinai OEM Residency Program</div>
+            <table>
+                <tr><td><span class="rotation-title">Selikoff Center for Occupational Medicine</span></td><td>Ongoing</td></tr>
+                <tr><td><span class="rotation-title">NIOSH Occupational Health/Medicine Rotation/Scholarship</span></td><td>Upcoming</td></tr>
+                <tr><td><span class="rotation-title">Memorial Sloan Kettering Cancer Center Occupational Health</span></td><td>2 M (Present)</td></tr>
+                <tr><td><span class="rotation-title">WTC Monitoring & Treatment at Selikoff Center</span></td><td>1 M</td></tr>
+                <tr><td><span class="rotation-title">Metropolitan Transit Authority (MTA) Occupational Health</span></td><td>3 M</td></tr>
+                <tr><td><span class="rotation-title">NYC DOH WTC Registry</span></td><td>2 M</td></tr>
+                <tr><td><span class="rotation-title">MSSM Ambulatory Pulmonology and Respiratory Institute</span></td><td>1 M</td></tr>
+                <tr><td><span class="rotation-title">MSSM Musculoskeletal Radiology</span></td><td>1 M</td></tr>
+                <tr><td><span class="rotation-title">MSSM Physical Medicine & Rehabilitation</span></td><td>2 M</td></tr>
+                <tr><td><span class="rotation-title">New York Occupational Safety and Health Administration</span></td><td>2 M</td></tr>
+                <tr><td><span class="rotation-title">Con Edison, Employee Health Center</span></td><td>2 M</td></tr>
+                <tr><td><span class="rotation-title">Pediatric Environmental Health Specialty Units</span></td><td>1 M</td></tr>
+                <tr><td><span class="rotation-title">Lifestyle Medicine Elective</span></td><td>1 M</td></tr>
+                <tr><td><span class="rotation-title">BASF Occupational & Environmental Medicine Course</span></td><td>2 M</td></tr>
+                <tr><td><span class="rotation-title">Acute Inpatient Psychiatry</span></td><td>4 M</td></tr>
+                <tr><td><span class="rotation-title">Emergency Psychiatry</span></td><td>2 M</td></tr>
+                <tr><td><span class="rotation-title">Inpatient Medicine</span></td><td>3 M</td></tr>
+                <tr><td><span class="rotation-title">Ambulatory Medicine</span></td><td>1 M</td></tr>
+                <tr><td><span class="rotation-title">Neurology (Inpatient & Consult)</span></td><td>2 M</td></tr>
+            </table>
+        </div>
+
+        <div class="section portfolio-section">
+            <div class="section-title">Digital Portfolio</div>
+            
+            <div class="portfolio-category">AI & TECHNOLOGY PLATFORMS</div>
+            <table>
+                <tr><td><a href="https://OCCMED.AI">OCCMED.AI</a></td><td>Primary professional practice portal</td></tr>
+                <tr><td><a href="https://SAFETYSENTINEL.APP">SAFETYSENTINEL.APP</a></td><td>AI-powered occupational safety analysis platform</td></tr>
+                <tr><td><a href="https://OCCDOC.AI">OCCDOC.AI</a></td><td>Healthcare technology integration platform</td></tr>
+                <tr><td><a href="https://JEVONSPARADOX.AI">JEVONSPARADOX.AI</a></td><td>Data center infrastructure & occupational analysis</td></tr>
+                <tr><td><a href="https://AMISANA.AI">AMISANA.AI</a></td><td>AI solutions & enterprise implementation</td></tr>
+                <tr><td><a href="https://DATA_INDEX.AI">DATA_INDEX.AI</a></td><td>Analytics & metrics platform</td></tr>
+                <tr><td><a href="https://TERMINAL.AI">TERMINAL.AI</a></td><td>Technical interface system</td></tr>
+                <tr><td><a href="https://THIP.AI">THIP.AI</a></td><td>Human Instrumentality Project</td></tr>
+                <tr><td><a href="https://FALLSUMMIT.CARD.CO">FALLSUMMIT.CARD.CO</a></td><td>ACOEM AI Resources & Guidance</td></tr>
+                <tr><td><a href="https://KIANIMD.COM">KIANIMD.COM</a></td><td>Professional link aggregator</td></tr>
+                <tr><td><a href="https://LINKEDIN.COM/IN/KIANIMD">LINKEDIN.COM/IN/KIANIMD</a></td><td>Professional updates & insights</td></tr>
+            </table>
+            
+            <div class="portfolio-category">FEATURED PROJECTS</div>
+            <div class="project">
+                <div class="project-title">1. Safety Sentinel AI Assistant (<a href="https://chatgpt.com/g/g-bnGCWzlLj-safety-sentinel">chatgpt.com/g/g-bnGCWzlLj-safety-sentinel</a>)</div>
+                <ul class="project-details">
+                    <li>GPT-Vision powered safety analysis system</li>
+                    <li>Regulatory guidance integration</li>
+                    <li>Automated hazard assessment</li>
+                </ul>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">2. $DATA Framework (<a href="https://jevonsparadox.ai">jevonsparadox.ai</a>)</div>
+                <ul class="project-details">
+                    <li>Developed "The $DATA Index," an index tracking the physical infrastructure of the digital age, spanning from semiconductor fabrication to data center cooling systems, thermal management technologies, and specialized materials essential for modern computing</li>
+                </ul>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">3. The Human Instrumentality Project (<a href="https://hanlonsrazor.substack.com">hanlonsrazor.substack.com</a>)</div>
+                <ul class="project-details">
+                    <li>Developed "The Human Instrumentality Project," a thought-provoking film narrative exploring the intersection of artificial intelligence, sustainability, and environmental impact through the lens of data center infrastructure and technological advancement.</li>
+                    <li>Leveraged multiple AI platforms including GPT, Claude, Midjourney, RunwayML, ElevenLabs, and Sora to create compelling narrative content and visual assets exploring themes of technological progress and environmental sustainability</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section projects-section">
+            <div class="section-title">Selected Research and Presentations</div>
+            
+            <div class="project">
+                <div class="project-title">Kiani, C. & Thompson, H. (2025). Occupational health surveillance in municipal wastewater workers: A clinical review and practical guidelines. [Manuscript completed]</div>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">Kiani, C., & Berenji, M. (2024). Navigating the AI Wave: A Framework for Understanding Occupational Impact and Adaptation. Presented at the 2024 ACOEM Fall Summit, Virtual Webinar, November 7, 2024.</div>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">Kiani, C. (2024). ChatGPT Workshop for Health.nyc.gov Staff. Virtual Webinar, October 9, 2024.</div>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">Kiani, C., Luisi, D., Dumanovsky, T., Jaber, M., Bienenfeld, L., & Gonzales, N. (2024). Enhancing transportation safety through sleep apnea management: The Metropolitan Transportation Authority's OSA program. Poster. American Occupational Health Conference (AOHC), Orlando, FL May 19-22, 2024.</div>
+            </div>
+        </div>
         
-        <div class="portfolio-category">AI & TECHNOLOGY PLATFORMS</div>
-        <table>
-            <tr><td><a href="https://OCCMED.AI">OCCMED.AI</a></td><td>Primary professional practice portal</td></tr>
-            <tr><td><a href="https://SAFETYSENTINEL.APP">SAFETYSENTINEL.APP</a></td><td>AI-powered occupational safety analysis platform</td></tr>
-            <tr><td><a href="https://OCCDOC.AI">OCCDOC.AI</a></td><td>Healthcare technology integration platform</td></tr>
-            <tr><td><a href="https://JEVONSPARADOX.AI">JEVONSPARADOX.AI</a></td><td>Data center infrastructure & occupational analysis</td></tr>
-            <tr><td><a href="https://AMISANA.AI">AMISANA.AI</a></td><td>AI solutions & enterprise implementation</td></tr>
-            <tr><td><a href="https://DATA_INDEX.AI">DATA_INDEX.AI</a></td><td>Analytics & metrics platform</td></tr>
-            <tr><td><a href="https://TERMINAL.AI">TERMINAL.AI</a></td><td>Technical interface system</td></tr>
-            <tr><td><a href="https://THIP.AI">THIP.AI</a></td><td>Human Instrumentality Project</td></tr>
-            <tr><td><a href="https://FALLSUMMIT.CARD.CO">FALLSUMMIT.CARD.CO</a></td><td>ACOEM AI Resources & Guidance</td></tr>
-            <tr><td><a href="https://KIANIMD.COM">KIANIMD.COM</a></td><td>Professional link aggregator</td></tr>
-            <tr><td><a href="https://LINKEDIN.COM/IN/KIANIMD">LINKEDIN.COM/IN/KIANIMD</a></td><td>Professional updates & insights</td></tr>
-        </table>
+        <div class="section projects-section">
+            <div class="section-title">Media & Presentations</div>
+            
+            <div class="project">
+                <div class="project-title">1. "Navigating the AI Wave" (Loom Presentation)</div>
+                <ul class="project-details">
+                    <li>Topic: AI's impact in occupational medicine</li>
+                    <li>Venue: ACOEM Fall Summit 2024</li>
+                    <li>URL: <a href="https://www.loom.com/a9b90852d4134994bcab7b3851b6b9c1">www.loom.com/a9b90852d4134994bcab7b3851b6b9c1</a></li>
+                </ul>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">2. "The Human Instrumentality Project" (Wistia)</div>
+                <ul class="project-details">
+                    <li>Topic: Ecological & technological analysis</li>
+                    <li>Format: AI-generated exploration</li>
+                    <li>ID: fttztjgiqk</li>
+                </ul>
+            </div>
+        </div>
         
-        <div class="portfolio-category">FEATURED PROJECTS</div>
-        <div class="project">
-            <div class="project-title">1. Safety Sentinel AI Assistant (<a href="https://chatgpt.com/g/g-bnGCWzlLj-safety-sentinel">chatgpt.com/g/g-bnGCWzlLj-safety-sentinel</a>)</div>
-            <ul class="project-details">
-                <li>GPT-Vision powered safety analysis system</li>
-                <li>Regulatory guidance integration</li>
-                <li>Automated hazard assessment</li>
+        <div class="section tech-section">
+            <div class="section-title">Technology Stack</div>
+            <div class="tech-grid">
+                <div class="tech-entry">
+                    <div class="tech-category">Language Models</div>
+                    <div class="tech-items">Claude, ChatGPT</div>
+                </div>
+                <div class="tech-entry">
+                    <div class="tech-category">Visual Generation</div>
+                    <div class="tech-items">RunwayML, SORA</div>
+                </div>
+                <div class="tech-entry">
+                    <div class="tech-category">Video Production</div>
+                    <div class="tech-items">Capcut</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section professional-section">
+            <div class="section-title">Specialized Training</div>
+            <ul class="rotation-list">
+                <li class="rotation-entry">Medical Review Officer (MRO) | Certification Course Complete (Exam Fall 2025)</li>
             </ul>
         </div>
         
-        <div class="project">
-            <div class="project-title">2. $DATA Framework (<a href="https://jevonsparadox.ai">jevonsparadox.ai</a>)</div>
-            <ul class="project-details">
-                <li>Developed "The $DATA Index," an index tracking the physical infrastructure of the digital age, spanning from semiconductor fabrication to data center cooling systems, thermal management technologies, and specialized materials essential for modern computing</li>
+        <div class="section professional-section">
+            <div class="section-title">Professional Service & Development</div>
+            <ul class="rotation-list">
+                <li class="rotation-entry">ACOEM Health Informatics Special Section | Resident Liaison | 2023 – Present</li>
+                <li class="rotation-entry">Psychiatric Services Journal Reviewer | Peer Reviewer | 2022 - Present</li>
             </ul>
         </div>
         
-        <div class="project">
-            <div class="project-title">3. The Human Instrumentality Project (<a href="https://hanlonsrazor.substack.com">hanlonsrazor.substack.com</a>)</div>
-            <ul class="project-details">
-                <li>Developed "The Human Instrumentality Project," a thought-provoking film narrative exploring the intersection of artificial intelligence, sustainability, and environmental impact through the lens of data center infrastructure and technological advancement.</li>
-                <li>Leveraged multiple AI platforms including GPT, Claude, Midjourney, RunwayML, ElevenLabs, and Sora to create compelling narrative content and visual assets exploring themes of technological progress and environmental sustainability</li>
+        <div class="section professional-section">
+            <div class="section-title">Professional Organizations</div>
+            <ul class="rotation-list">
+                <li class="rotation-entry">ACOEM | American College of Occupational & Environmental Medicine</li>
+                <li class="rotation-entry">ACHPD | Alliance for Continuing Education in the Healthcare Professional Development</li>
             </ul>
         </div>
-    </div>
+        
+        <div class="section professional-section">
+            <div class="section-title">Selected Awards, Recognition, and Continuing Education</div>
+            <ul class="rotation-list">
+                <li class="rotation-entry">AOHC 2024 Resident Scholarship | American College of Occupational and Environmental Medicine (ACOEM)</li>
+                <li class="rotation-entry">Foreign Language and Area Studies Fellow | US Department of Education</li>
+                <li class="rotation-entry">Medical Review Officer (MRO) Comprehensive Course | American College of Occupational & Environmental Medicine</li>
+            </ul>
+        </div>
+        
+        <div class="section professional-section">
+            <div class="section-title">Languages</div>
+            <ul class="rotation-list">
+                <li class="rotation-entry">English (Native)</li>
+                <li class="rotation-entry">Farsi (Conversational)</li>
+            </ul>
+        </div>
 
-    <div class="section">
-        <div class="section-title">Media & Presentations</div>
+        <!-- PDF Export Button -->
+        <button class="pdf-export" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i> Download as PDF
+        </button>
         
-        <div class="project">
-            <div class="project-title">1. "Navigating the AI Wave" (Loom Presentation)</div>
-            <ul class="project-details">
-                <li>Topic: AI's impact in occupational medicine</li>
-                <li>Venue: ACOEM Fall Summit 2024</li>
-                <li>URL: <a href="https://www.loom.com/a9b90852d4134994bcab7b3851b6b9c1">www.loom.com/a9b90852d4134994bcab7b3851b6b9c1</a></li>
-            </ul>
-        </div>
-        
-        <div class="project">
-            <div class="project-title">2. "The Human Instrumentality Project" (Wistia)</div>
-            <ul class="project-details">
-                <li>Topic: Ecological & technological analysis</li>
-                <li>Format: AI-generated exploration</li>
-                <li>ID: fttztjgiqk</li>
-            </ul>
+        <!-- PDF Loading Indicator -->
+        <div class="pdf-loading">
+            <div class="pdf-loading-spinner"></div>
+            <div class="pdf-loading-text">Generating PDF...</div>
         </div>
     </div>
     
-    <div class="section">
-        <div class="section-title">Technology Stack</div>
-        <ul class="rotation-list">
-            <li class="rotation-entry">- Language Models: Claude, ChatGPT</li>
-            <li class="rotation-entry">- Visual Generation: RunwayML, SORA</li>
-            <li class="rotation-entry">- Video Production: Capcut</li>
-        </ul>
+    <!-- Mobile Navigation Toggle -->
+    <div class="mobile-nav-toggle" id="mobileNavToggle">
+        <i class="fas fa-bars"></i>
     </div>
     
-    <div class="section">
-        <div class="section-title">Specialized Training</div>
-        <div class="education-entry">
-            <div class="education-title">Medical Review Officer (MRO) | Certification Course Complete (Exam Fall 2025)</div>
+    <!-- Quick Navigation Buttons -->
+    <div class="quick-nav">
+        <div class="quick-nav-button" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        <div class="quick-nav-button" onclick="scrollToBottom()">
+            <i class="fas fa-arrow-down"></i>
         </div>
     </div>
     
-    <div class="section">
-        <div class="section-title">Professional Service & Development</div>
-        <ul class="rotation-list">
-            <li class="rotation-entry">ACOEM Health Informatics Special Section | Resident Liaison | 2023 – Present</li>
-            <li class="rotation-entry">Psychiatric Services Journal Reviewer | Peer Reviewer | 2022 - Present</li>
-        </ul>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">Professional Organizations</div>
-        <ul class="rotation-list">
-            <li class="rotation-entry">ACOEM | American College of Occupational & Environmental Medicine</li>
-            <li class="rotation-entry">ACHPD | Alliance for Continuing Education in the Healthcare Professional Development</li>
-        </ul>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">Selected Research and Presentations</div>
-        
-        <div class="project">
-            <div class="project-title">Kiani, C. & Thompson, H. (2025). Occupational health surveillance in municipal wastewater workers: A clinical review and practical guidelines. [Manuscript completed]</div>
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <div class="mobile-nav-title">CV Sections</div>
+            <div class="mobile-nav-close" id="mobileNavClose">
+                <i class="fas fa-times"></i>
+            </div>
         </div>
-        
-        <div class="project">
-            <div class="project-title">Kiani, C., & Berenji, M. (2024). Navigating the AI Wave: A Framework for Understanding Occupational Impact and Adaptation. Presented at the 2024 ACOEM Fall Summit, Virtual Webinar, November 7, 2024.</div>
-        </div>
-        
-        <div class="project">
-            <div class="project-title">Kiani, C. (2024). ChatGPT Workshop for Health.nyc.gov Staff. Virtual Webinar, October 9, 2024.</div>
-        </div>
-        
-        <div class="project">
-            <div class="project-title">Kiani, C., Luisi, D., Dumanovsky, T., Jaber, M., Bienenfeld, L., & Gonzales, N. (2024). Enhancing transportation safety through sleep apnea management: The Metropolitan Transportation Authority's OSA program. Poster. American Occupational Health Conference (AOHC), Orlando, FL May 19-22, 2024.</div>
+        <div class="mobile-nav-sections" id="mobileNavSections">
+            <!-- Will be populated by JavaScript -->
         </div>
     </div>
-    
-    <div class="section">
-        <div class="section-title">Selected Awards, Recognition, and Continuing Education</div>
-        <ul class="rotation-list">
-            <li class="rotation-entry">AOHC 2024 Resident Scholarship | American College of Occupational and Environmental Medicine (ACOEM)</li>
-            <li class="rotation-entry">Foreign Language and Area Studies Fellow | US Department of Education</li>
-            <li class="rotation-entry">Medical Review Officer (MRO) Comprehensive Course | American College of Occupational & Environmental Medicine</li>
-        </ul>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">Languages</div>
-        <div>English, Farsi</div>
-    </div>
-
-    <!-- PDF Export Button -->
-    <button class="pdf-export" onclick="printAsPDF()">Download as PDF</button>
 
     <!-- JavaScript for PDF printing -->
     <script>
+        // Old print function
         function printAsPDF() {
-            window.print();
+            // Remove animation classes before printing to ensure all content is visible
+            document.querySelectorAll('.animate-ready').forEach(el => {
+                el.classList.remove('animate-ready');
+                el.classList.add('animate-in');
+            });
+            
+            // Short delay to ensure styles are applied before print
+            setTimeout(() => {
+                window.print();
+            }, 100);
+        }
+        
+        // New PDF generation function
+        function generatePDF() {
+            // Show loading indicator
+            const loadingIndicator = document.querySelector('.pdf-loading');
+            loadingIndicator.style.display = 'flex';
+            
+            // Make sure all animations are complete
+            document.querySelectorAll('.animate-ready').forEach(el => {
+                el.classList.remove('animate-ready');
+                el.classList.add('animate-in');
+            });
+            
+            // Hide the PDF button during capture
+            const pdfButton = document.querySelector('.pdf-export');
+            const loadingElement = document.querySelector('.pdf-loading');
+            pdfButton.style.display = 'none';
+            
+            // Hide mobile navigation elements during capture
+            const mobileNavToggle = document.getElementById('mobileNavToggle');
+            const quickNav = document.querySelector('.quick-nav');
+            const progressIndicator = document.querySelector('.progress-indicator');
+            
+            if (mobileNavToggle) mobileNavToggle.style.display = 'none';
+            if (quickNav) quickNav.style.display = 'none';
+            if (progressIndicator) progressIndicator.style.display = 'none';
+            
+            // Short delay to ensure styles are applied
+            setTimeout(() => {
+                const { jsPDF } = window.jspdf;
+                const container = document.querySelector('.container');
+                
+                // Create PDF with standard dimensions (A4)
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                // Get all sections to process them individually for better quality
+                const sections = Array.from(document.querySelectorAll('.section, .header, .about-me, .pdf-export'));
+                
+                // Function to process sections sequentially
+                const processSections = async (index = 0, currentPage = 1) => {
+                    if (index >= sections.length) {
+                        // All sections processed, save the PDF
+                        pdf.save('Cameron_Kiani_CV.pdf');
+                        
+                        // Restore UI elements
+                        pdfButton.style.display = 'block';
+                        if (mobileNavToggle) mobileNavToggle.style.display = 'block';
+                        if (quickNav) quickNav.style.display = 'block';
+                        if (progressIndicator) progressIndicator.style.display = 'block';
+                        loadingIndicator.style.display = 'none';
+                        
+                        return;
+                    }
+                    
+                    // Update loading text
+                    document.querySelector('.pdf-loading-text').textContent = 
+                        `Generating PDF... (${index + 1}/${sections.length})`;
+                    
+                    const section = sections[index];
+                    
+                    try {
+                        // Capture the section
+                        const canvas = await html2canvas(section, {
+                            scale: 3, // Higher scale for better quality
+                            useCORS: true,
+                            logging: false,
+                            allowTaint: true,
+                            backgroundColor: '#ffffff'
+                        });
+                        
+                        // Convert to image
+                        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                        
+                        // Get PDF dimensions
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = pdf.internal.pageSize.getHeight();
+                        
+                        // Calculate image dimensions to fit in PDF
+                        const imgWidth = canvas.width;
+                        const imgHeight = canvas.height;
+                        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / 3); // Limit height to 1/3 of page
+                        const scaledWidth = imgWidth * ratio;
+                        const scaledHeight = imgHeight * ratio;
+                        
+                        // Check if we need a new page
+                        if (index > 0) {
+                            // Calculate current Y position
+                            const yPosition = (currentPage - 1) * pdfHeight + scaledHeight;
+                            
+                            // If this section would go beyond page, add a new page
+                            if (yPosition > currentPage * pdfHeight - 10) { // 10mm margin
+                                pdf.addPage();
+                                currentPage++;
+                            }
+                        }
+                        
+                        // Calculate position (centered horizontally, sequential vertically)
+                        const xPosition = (pdfWidth - scaledWidth) / 2;
+                        const yPosition = (index === 0) ? 10 : // First item (header) at top with margin
+                                         ((currentPage - 1) * pdfHeight + 
+                                          ((index === 1) ? 30 : scaledHeight)); // Position based on previous content
+                        
+                        // Add image to PDF
+                        pdf.addImage(imgData, 'JPEG', xPosition, yPosition, scaledWidth, scaledHeight);
+                        
+                        // Process next section
+                        setTimeout(() => {
+                            processSections(index + 1, currentPage);
+                        }, 100); // Small delay to prevent browser from freezing
+                        
+                    } catch (error) {
+                        console.error('Error processing section:', error);
+                        
+                        // Continue with next section despite error
+                        processSections(index + 1, currentPage);
+                    }
+                };
+                
+                // Start processing sections
+                processSections();
+                
+            }, 500);
+        }
+    </script>
+    
+    <!-- Navigation and Scrolling JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all sections for navigation
+            const sections = document.querySelectorAll('.section');
+            const mobileNavSections = document.getElementById('mobileNavSections');
+            const mobileNavToggle = document.getElementById('mobileNavToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            const mobileNavClose = document.getElementById('mobileNavClose');
+            const progressIndicator = document.querySelector('.progress-indicator');
+            
+            // Icons for each section type
+            const sectionIcons = {
+                'education-section': 'fa-graduation-cap',
+                'exam-section': 'fa-clipboard-check',
+                'rotations-section': 'fa-hospital',
+                'portfolio-section': 'fa-briefcase',
+                'projects-section': 'fa-file-alt',
+                'tech-section': 'fa-laptop-code',
+                'professional-section': 'fa-user-tie'
+            };
+            
+            // Populate mobile navigation
+            sections.forEach(section => {
+                const sectionTitle = section.querySelector('.section-title').textContent;
+                const sectionId = section.className.split(' ')[1] || '';
+                const iconClass = sectionIcons[sectionId] || 'fa-bookmark';
+                
+                // Create navigation item
+                const navItem = document.createElement('div');
+                navItem.className = 'mobile-nav-section';
+                navItem.innerHTML = `
+                    <div class="mobile-nav-icon"><i class="fas ${iconClass}"></i></div>
+                    <div>${sectionTitle}</div>
+                `;
+                
+                // Add click event
+                navItem.addEventListener('click', () => {
+                    // Scroll to section
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Highlight the section briefly
+                    section.classList.add('highlight');
+                    setTimeout(() => {
+                        section.classList.remove('highlight');
+                    }, 2000);
+                    
+                    // Close mobile nav
+                    mobileNav.classList.remove('active');
+                    
+                    // Update active state
+                    document.querySelectorAll('.mobile-nav-section').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    navItem.classList.add('active');
+                });
+                
+                mobileNavSections.appendChild(navItem);
+            });
+            
+            // Toggle mobile navigation
+            mobileNavToggle.addEventListener('click', () => {
+                mobileNav.classList.add('active');
+            });
+            
+            // Close mobile navigation
+            mobileNavClose.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+            
+            // Update scroll progress indicator
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.body.offsetHeight;
+                const winHeight = window.innerHeight;
+                const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+                progressIndicator.style.width = scrollPercent + '%';
+                
+                // Update active section in navigation
+                let currentSectionIndex = 0;
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (scrollTop >= sectionTop - 200) {
+                        currentSectionIndex = index;
+                    }
+                });
+                
+                document.querySelectorAll('.mobile-nav-section').forEach((item, index) => {
+                    if (index === currentSectionIndex) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Initialize scroll position indicator
+            window.dispatchEvent(new Event('scroll'));
+        });
+        
+        // Helper functions for quick navigation
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        function scrollToBottom() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
         }
     </script>
 </body>
