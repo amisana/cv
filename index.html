@@ -1136,6 +1136,113 @@
         .category-chip + .category-chip {
             margin-left: 2px; /* Increase spacing between adjacent chips */
         }
+
+        /* Tooltip Container */
+        .cv-tooltip-container {
+          position: absolute;
+          z-index: 9999;
+          background-color: rgba(0, 0, 0, 0.8);
+          color: #fff;
+          border-radius: 4px;
+          padding: 8px 12px;
+          font-size: 14px;
+          line-height: 1.4;
+          text-align: center;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          max-width: 250px;
+          word-wrap: break-word;
+        }
+
+        /* Visible state */
+        .cv-tooltip-visible {
+          opacity: 1;
+        }
+
+        /* Tooltip arrow */
+        .cv-tooltip-container:after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+        }
+
+        /* Position: top */
+        .cv-tooltip-top:after {
+          bottom: -5px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 5px 5px 0 5px;
+          border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+        }
+
+        /* Position: bottom */
+        .cv-tooltip-bottom:after {
+          top: -5px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 0 5px 5px 5px;
+          border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
+        }
+
+        /* Position: left */
+        .cv-tooltip-left:after {
+          right: -5px;
+          top: 50%;
+          transform: translateY(-50%);
+          border-width: 5px 0 5px 5px;
+          border-color: transparent transparent transparent rgba(0, 0, 0, 0.8);
+        }
+
+        /* Position: right */
+        .cv-tooltip-right:after {
+          left: -5px;
+          top: 50%;
+          transform: translateY(-50%);
+          border-width: 5px 5px 5px 0;
+          border-color: transparent rgba(0, 0, 0, 0.8) transparent transparent;
+        }
+
+        /* Light theme */
+        .cv-tooltip-theme-light {
+          background-color: rgba(255, 255, 255, 0.95);
+          color: #333;
+          border: 1px solid #ddd;
+        }
+
+        .cv-tooltip-theme-light.cv-tooltip-top:after {
+          border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+        }
+
+        .cv-tooltip-theme-light.cv-tooltip-bottom:after {
+          border-color: transparent transparent rgba(255, 255, 255, 0.95) transparent;
+        }
+
+        .cv-tooltip-theme-light.cv-tooltip-left:after {
+          border-color: transparent transparent transparent rgba(255, 255, 255, 0.95);
+        }
+
+        .cv-tooltip-theme-light.cv-tooltip-right:after {
+          border-color: transparent rgba(255, 255, 255, 0.95) transparent transparent;
+        }
+
+        /* Professional theme */
+        .cv-tooltip-theme-professional {
+          background-color: #f5f5f5;
+          color: #333;
+          border: 1px solid #ccc;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Print styles */
+        @media print {
+          .cv-tooltip-container {
+            display: none !important;
+          }
+        }
     </style>
     <!-- Intersection Observer for scroll animations -->
     <script>
@@ -1479,13 +1586,15 @@
             
             <div class="edu-entry">
                 <div class="edu-year">2011-2014</div>
-                <div class="edu-degree">B.A. Psychology</div>
-                <div class="edu-institution">University of Pennsylvania, Philadelphia, PA | <i>Phi Beta Kappa | GPA: 3.96/4.00</i></div>
+                <div class="edu-degree">B.A. Psychology <i class="fas fa-info-circle" style="font-size: 0.8em; color: #666; vertical-align: middle; margin-left: 2px;" data-tooltip="Phi Beta Kappa" data-tooltip-position="right"></i></div>
+                <div class="edu-institution">University of Pennsylvania, Philadelphia, PA</div>
             </div>
             
             <div class="edu-entry">
                 <div class="edu-year">2015-2020</div>
-                <div class="edu-degree">M.D.</div>
+                <div class="edu-degree">
+                    <span data-tooltip="Early assurance program (Humanities & Medicine track) - admitted as Sophomore" data-tooltip-position="right" data-tooltip-theme="professional">M.D. <i class="fas fa-info-circle" style="font-size: 0.8em; color: #666; vertical-align: middle; margin-left: 2px;"></i></span>
+                </div>
                 <div class="edu-institution">Icahn School of Medicine at Mount Sinai, New York, NY</div>
             </div>
 
@@ -1808,49 +1917,56 @@
                     </td>
                     <td>Data center infrastructure & occupational analysis</td>
                 </tr>
-                <tr>
+                <tr id="platform-toggle-row">
+                    <td colspan="2" style="text-align: center; padding: 10px;">
+                        <button id="platform-toggle-btn" style="background: none; border: 1px solid #ddd; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+                            <i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Show More Platforms
+                        </button>
+                    </td>
+                </tr>
+                <tr class="hidden-platform">
                     <td>
                         <a href="https://AMISANA.AI">AMISANA.AI</a>
                         <span class="platform-chip platform-enterprise">Enterprise</span>
                     </td>
                     <td>AI solutions & enterprise implementation</td>
                 </tr>
-                <tr>
+                <tr class="hidden-platform">
                     <td>
                         <a href="https://DATA_INDEX.AI">DATA_INDEX.AI</a>
                         <span class="platform-chip platform-analytics">Analytics</span>
                     </td>
                     <td>Analytics & metrics platform</td>
                 </tr>
-                <tr>
+                <tr class="hidden-platform">
                     <td>
                         <a href="https://TERMINAL.AI">TERMINAL.AI</a>
                         <span class="platform-chip platform-tech">Tech</span>
                     </td>
                     <td>Technical interface system</td>
                 </tr>
-                <tr>
+                <tr class="hidden-platform">
                     <td>
                         <a href="https://THIP.AI">THIP.AI</a>
                         <span class="platform-chip platform-project">Project</span>
                     </td>
                     <td>Human Instrumentality Project</td>
                 </tr>
-                <tr>
+                <tr class="hidden-platform">
                     <td>
                         <a href="https://FALLSUMMIT.CARD.CO">FALLSUMMIT.CARD.CO</a>
                         <span class="platform-chip platform-resource">Resource</span>
                     </td>
                     <td>ACOEM AI Resources & Guidance</td>
                 </tr>
-                <tr>
+                <tr class="hidden-platform">
                     <td>
                         <a href="https://KIANIMD.COM">KIANIMD.COM</a>
                         <span class="platform-chip platform-personal">Personal</span>
                     </td>
                     <td>Professional link aggregator</td>
                 </tr>
-                <tr>
+                <tr class="hidden-platform">
                     <td>
                         <a href="https://LINKEDIN.COM/IN/KIANIMD">LINKEDIN.COM/IN/KIANIMD</a>
                         <span class="platform-chip platform-social">Social</span>
@@ -1860,6 +1976,40 @@
             </table>
 
     <div class="portfolio-category">FEATURED PROJECTS</div>
+    
+    <!-- Add CSS for hidden platforms -->
+    <style>
+        .hidden-platform {
+            display: none;
+        }
+    </style>
+    
+    <!-- Add JavaScript for toggle functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('platform-toggle-btn');
+            const hiddenPlatforms = document.querySelectorAll('.hidden-platform');
+            let expanded = false;
+            
+            toggleBtn.addEventListener('click', function() {
+                if (expanded) {
+                    // Hide platforms
+                    hiddenPlatforms.forEach(platform => {
+                        platform.style.display = 'none';
+                    });
+                    toggleBtn.innerHTML = '<i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Show More Platforms';
+                } else {
+                    // Show platforms
+                    hiddenPlatforms.forEach(platform => {
+                        platform.style.display = 'table-row';
+                    });
+                    toggleBtn.innerHTML = '<i class="fas fa-minus-circle" style="margin-right: 5px;"></i> Show Less';
+                }
+                expanded = !expanded;
+            });
+        });
+    </script>
+            
             <div class="project">
                 <div class="project-title">The $DATA Index/Fund (<a href="https://dataindex.glide.page/dl/17171d">thedataindex.ai</a>)</div>
                 <ul class="project-details">

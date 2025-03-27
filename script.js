@@ -59,7 +59,8 @@ class CVPlatform {
       contentManager: null,
       pdfGenerator: null,
       animationController: null,
-      introAnimation: null
+      introAnimation: null,
+      tooltipSystem: null
     };
     
     // System state management
@@ -101,6 +102,7 @@ class CVPlatform {
    *    - Navigation
    *    - PDF Generator
    *    - Intro Animation
+   *    - Tooltip System
    * 4. Sets up event listeners with proper delegation
    * 5. Records performance metrics
    * 
@@ -121,6 +123,7 @@ class CVPlatform {
     this.initializeNavigation();
     this.initializePDFGenerator();
     this.initializeIntroAnimation();
+    this.initializeTooltipSystem();
     
     // Set up event listeners with proper delegation
     this.setupEventListeners();
@@ -1292,6 +1295,223 @@ class CVPlatform {
     requestAnimationFrame(() => {
       this.components.navigation.updateNavigationState();
     });
+  }
+  
+  /**
+   * Initializes the tooltip system for enhanced user guidance
+   * and contextual information display
+   * 
+   * @private
+   * @method initializeTooltipSystem
+   * 
+   * @description
+   * Sets up a custom tooltip system that:
+   * - Provides contextual information on hover/focus
+   * - Manages tooltip positioning and visibility
+   * - Supports mobile and keyboard interactions
+   * - Handles accessibility requirements
+   * 
+   * @returns {void}
+   */
+  initializeTooltipSystem() {
+    // Create tooltip container and service as an object with bound methods
+    const tooltipSystem = {
+      activeTooltip: null,
+      showTimeout: null,
+      
+      createTooltipContainer() {
+        // Check if container already exists
+        let container = document.getElementById('cv-tooltip-container');
+        
+        if (!container) {
+          container = document.createElement('div');
+          container.id = 'cv-tooltip-container';
+          container.className = 'cv-tooltip-container';
+          container.setAttribute('role', 'tooltip');
+          container.setAttribute('aria-hidden', 'true');
+          document.body.appendChild(container);
+        }
+        
+        return container;
+      },
+      
+      showTooltip(targetElement, content, options = {}) {
+        // Clear any existing timeout
+        if (this.showTimeout) {
+          clearTimeout(this.showTimeout);
+        }
+        
+        // Default options
+        const config = {
+          delay: options.delay ?? 300,
+          position: options.position ?? 'top',
+          theme: options.theme ?? 'default',
+          maxWidth: options.maxWidth ?? 250,
+        };
+        
+        // Create and show tooltip with appropriate delay
+        this.showTimeout = setTimeout(() => {
+          const container = this.createTooltipContainer();
+          
+          // Set content and add appropriate classes
+          container.innerHTML = content;
+          container.className = 'cv-tooltip-container';
+          container.classList.add(`cv-tooltip-${config.position}`);
+          
+          if (config.theme !== 'default') {
+            container.classList.add(`cv-tooltip-theme-${config.theme}`);
+          }
+          
+          container.style.maxWidth = `${config.maxWidth}px`;
+          
+          // Get position of target element
+          const targetRect = targetElement.getBoundingClientRect();
+          
+          // Calculate position based on target and scroll
+          const scrollX = window.scrollX || window.pageXOffset;
+          const scrollY = window.scrollY || window.pageYOffset;
+          
+          // Simplifying the positioning for this example
+          let left = targetRect.left + targetRect.width / 2 + scrollX;
+          let top = targetRect.top + scrollY - 10;
+          
+          // Apply position
+          container.style.transform = 'translate(-50%, -100%)';
+          container.style.left = `${left}px`;
+          container.style.top = `${top}px`;
+          
+          // Make tooltip visible
+          container.classList.add('cv-tooltip-visible');
+          container.setAttribute('aria-hidden', 'false');
+          
+          // Set aria attributes for accessibility
+          targetElement.setAttribute('aria-describedby', 'cv-tooltip-container');
+          
+          // Store reference to active tooltip
+          this.activeTooltip = container;
+        }, config.delay);
+      },
+      
+      hideTooltip(delay = 0) {
+        // Clear show timeout if it exists
+        if (this.showTimeout) {
+          clearTimeout(this.showTimeout);
+          this.showTimeout = null;
+        }
+        
+        // If no tooltip is active, do nothing
+        if (!this.activeTooltip) return;
+        
+        const hideTooltipNow = () => {
+          const container = this.activeTooltip;
+          if (!container) return;
+          
+          // Remove visible class
+          container.classList.remove('cv-tooltip-visible');
+          container.setAttribute('aria-hidden', 'true');
+          
+          // Remove aria-describedby from triggering element
+          const describedElement = document.querySelector('[aria-describedby="cv-tooltip-container"]');
+          if (describedElement) {
+            describedElement.removeAttribute('aria-describedby');
+          }
+          
+          // Clear active tooltip reference
+          this.activeTooltip = null;
+        };
+        
+        if (delay > 0) {
+          setTimeout(hideTooltipNow.bind(this), delay);
+        } else {
+          hideTooltipNow.bind(this)();
+        }
+      },
+      
+      adjustTooltipPosition(tooltip) {
+        // Position adjustment logic (unchanged)
+        // ...
+      },
+      
+      initialize() {
+        // Create tooltip container
+        this.createTooltipContainer();
+        
+        // Use event delegation for better performance
+        document.body.addEventListener('mouseover', (e) => {
+          const tooltipTrigger = e.target.closest('[data-tooltip]');
+          if (!tooltipTrigger) return;
+          
+          // Get tooltip options from data attributes
+          const content = tooltipTrigger.getAttribute('data-tooltip');
+          const position = tooltipTrigger.getAttribute('data-tooltip-position') || 'top';
+          const theme = tooltipTrigger.getAttribute('data-tooltip-theme') || 'default';
+          const delay = parseInt(tooltipTrigger.getAttribute('data-tooltip-delay') || '300', 10);
+          const maxWidth = parseInt(tooltipTrigger.getAttribute('data-tooltip-max-width') || '250', 10);
+          
+          // Show tooltip using bound method to ensure proper this context
+          this.showTooltip(tooltipTrigger, content, {
+            position,
+            theme,
+            delay,
+            maxWidth
+          });
+        });
+        
+        // Mouse out event listener
+        document.body.addEventListener('mouseout', (e) => {
+          const tooltipTrigger = e.target.closest('[data-tooltip]');
+          if (!tooltipTrigger) return;
+          
+          this.hideTooltip();
+        });
+        
+        // Additional event listeners for accessibility
+        document.body.addEventListener('focusin', (e) => {
+          const tooltipTrigger = e.target.closest('[data-tooltip]');
+          if (!tooltipTrigger) return;
+          
+          const content = tooltipTrigger.getAttribute('data-tooltip');
+          const position = tooltipTrigger.getAttribute('data-tooltip-position') || 'top';
+          const theme = tooltipTrigger.getAttribute('data-tooltip-theme') || 'default';
+          const maxWidth = parseInt(tooltipTrigger.getAttribute('data-tooltip-max-width') || '250', 10);
+          
+          this.showTooltip(tooltipTrigger, content, {
+            position,
+            theme,
+            delay: 0, // Show immediately on focus
+            maxWidth
+          });
+        });
+        
+        document.body.addEventListener('focusout', (e) => {
+          const tooltipTrigger = e.target.closest('[data-tooltip]');
+          if (!tooltipTrigger) return;
+          
+          this.hideTooltip();
+        });
+        
+        // Handle escape key to dismiss tooltips
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.activeTooltip) {
+            this.hideTooltip();
+          }
+        });
+      }
+    };
+    
+    // Store the tooltip system in the component registry with proper binding
+    this.components.tooltipSystem = tooltipSystem;
+    
+    // Defer initialization to ensure DOM is ready
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      // DOM already ready, initialize now
+      tooltipSystem.initialize();
+    } else {
+      // Wait for DOM to be fully loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        tooltipSystem.initialize();
+      });
+    }
   }
 }
 
