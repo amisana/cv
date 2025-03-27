@@ -1905,13 +1905,6 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="https://OCCDOC.AI">OCCDOC.AI</a>
-                        <span class="platform-chip platform-health">Health</span>
-                    </td>
-                    <td>Healthcare technology integration platform</td>
-                </tr>
-                <tr>
-                    <td>
                         <a href="https://JEVONSPARADOX.AI">JEVONSPARADOX.AI</a>
                         <span class="platform-chip platform-infra">Infra</span>
                     </td>
@@ -2010,37 +2003,202 @@
         });
     </script>
             
-            <div class="project">
-                <div class="project-title">The $DATA Index/Fund (<a href="https://dataindex.glide.page/dl/17171d">thedataindex.ai</a>)</div>
-                <ul class="project-details">
-                    <li>Developed "The $DATA Index," an index tracking the physical infrastructure of the digital age, spanning from semiconductor fabrication to data center cooling systems, thermal management technologies, and specialized materials essential for modern computing</li>
-                </ul>
-            </div>
+    <style>
+        /* Add these new styles for featured projects */
+        .featured-project {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-project:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: #a5d8c7; /* Light teal color like platform-primary */
+        }
+        
+        .featured-project-title {
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .featured-project-title-text {
+            display: flex;
+            align-items: center;
+        }
+        
+        .featured-project-link {
+            font-size: 0.8rem;
+            font-weight: normal;
+            background-color: #f8f8f8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+        
+        .featured-project-link:hover {
+            background-color: #eee;
+        }
+        
+        .featured-project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-size: 0.75rem;
+        }
+        
+        .featured-project-tag {
+            background-color: #f0f0f0;
+            padding: 1px 6px;
+            border-radius: 3px;
+            color: #666;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .featured-project-details {
+            margin-top: 6px;
+        }
+        
+        .featured-project-details ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        
+        .featured-project-details li {
+            margin-bottom: 3px;
+            line-height: 1.3;
+            font-size: 0.9rem;
+        }
+        
+        .featured-project-icon {
+            margin-right: 5px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .featured-projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 767px) {
+            .featured-projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
             
-            <div class="project">
-                <div class="project-title">The Human Instrumentality Project (<a href="thip.ai">thip.ai</a>)</div>
-                <ul class="project-details">
-                    <li>Developed "The Human Instrumentality Project," a thought-provoking film narrative exploring the intersection of artificial intelligence, sustainability, and environmental impact through the lens of data center infrastructure and technological advancement.</li>
-                    <li>Leveraged multiple AI platforms including GPT, Claude, Midjourney, RunwayML, ElevenLabs, and Sora to create compelling narrative content and visual assets exploring themes of technological progress and environmental sustainability</li>
+    <div class="featured-projects-grid">
+        <div class="featured-project">
+            <div class="featured-project-title">
+                <div class="featured-project-title-text">
+                    <i class="fas fa-chart-line featured-project-icon"></i>
+                    The $DATA Index/Fund
+                </div>
+                <a href="https://dataindex.glide.page/dl/17171d" target="_blank" class="featured-project-link">
+                    thedataindex.ai <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
+                </a>
+            </div>
+            <div class="featured-project-meta">
+                <span class="featured-project-tag"><i class="fas fa-tag featured-project-icon"></i> Financial Index</span>
+                <span class="featured-project-tag"><i class="fas fa-server featured-project-icon"></i> Data Infrastructure</span>
+                <span class="featured-project-tag"><i class="fas fa-calendar-alt featured-project-icon"></i> 2023</span>
+            </div>
+            <div class="featured-project-details">
+                <ul>
+                    <li>Comprehensive index tracking physical infrastructure of the digital economy</li>
+                    <li>Spans semiconductor fabrication to data center cooling systems</li>
+                    <li>Analysis of thermal management technologies and specialized materials</li>
+                    <li>Used by infrastructure investors, IB firms, and fund managers</li>
                 </ul>
             </div>
         </div>
-
-        <div class="project">
-            <div class="project-title">Safety Sentinel (<a href="https://chatgpt.com/g/g-bnGCWzlLj-safety-sentinel">safetysentinel.app</a>)</div>
-            <ul class="project-details">
-                <li>GPT-Vision powered safety analysis system</li>
-                <li>Regulatory guidance integration</li>
-                <li>Automated hazard assessment</li>
-            </ul>
-        </div>
-
-        <div class="section projects-section">
-            <div class="section-title">Selected Research and Presentations</div>
-            
-            <div class="project">
-                <div class="project-title">Kiani, C. & Thompson, H. (2025). Occupational health surveillance in municipal wastewater workers: A clinical review and practical guidelines. [Manuscript completed]</div>
+        
+        <div class="featured-project">
+            <div class="featured-project-title">
+                <div class="featured-project-title-text">
+                    <i class="fas fa-film featured-project-icon"></i>
+                    The Human Instrumentality Project
+                </div>
+                <a href="https://thip.ai" target="_blank" class="featured-project-link">
+                    thip.ai <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
+                </a>
             </div>
+            <div class="featured-project-meta">
+                <span class="featured-project-tag"><i class="fas fa-video featured-project-icon"></i> Film</span>
+                <span class="featured-project-tag"><i class="fas fa-leaf featured-project-icon"></i> Sustainability</span>
+                <span class="featured-project-tag"><i class="fas fa-robot featured-project-icon"></i> AI-Generated</span>
+                <span class="featured-project-tag"><i class="fas fa-calendar-alt featured-project-icon"></i> 2024</span>
+            </div>
+            <div class="featured-project-details">
+                <ul>
+                    <li>Thought-provoking narrative exploring AI, sustainability, and environmental impact</li>
+                    <li>Created using multiple AI tools: GPT-4, Claude, Midjourney, RunwayML</li>
+                    <li>Voice generation with ElevenLabs, video with SORA</li>
+                    <li>Explores ecological impacts of data center infrastructure growth</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="featured-project">
+            <div class="featured-project-title">
+                <div class="featured-project-title-text">
+                    <i class="fas fa-shield-alt featured-project-icon"></i>
+                    Safety Sentinel
+                </div>
+                <a href="https://chatgpt.com/g/g-bnGCWzlLj-safety-sentinel" target="_blank" class="featured-project-link">
+                    safetysentinel.app <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
+                </a>
+            </div>
+            <div class="featured-project-meta">
+                <span class="featured-project-tag"><i class="fas fa-hard-hat featured-project-icon"></i> Safety</span>
+                <span class="featured-project-tag"><i class="fas fa-eye featured-project-icon"></i> Computer Vision</span>
+                <span class="featured-project-tag"><i class="fas fa-clipboard-check featured-project-icon"></i> OSHA</span>
+                <span class="featured-project-tag"><i class="fas fa-calendar-alt featured-project-icon"></i> 2024</span>
+            </div>
+            <div class="featured-project-details">
+                <ul>
+                    <li>GPT-Vision powered safety analysis system for workplace hazard detection</li>
+                    <li>Real-time regulatory guidance integration from OSHA and industry standards</li>
+                    <li>Automated hazard assessment with severity/probability ranking</li>
+                    <li>Used in manufacturing, construction, and healthcare settings</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section projects-section">
+    <div class="section-title">Selected Research and Presentations</div>
+    
+    <div class="project">
+        <div class="project-title">Kiani, C. & Thompson, H. (2025). Occupational health surveillance in municipal wastewater workers: A clinical review and practical guidelines. [Manuscript completed]</div>
+    </div>
             
             <div class="project">
                 <div class="project-title">Zadeh, A., Nosoudi, N., Halley, R., Kiani, C., & Ramirez-Vick, J. E. (2024). Predictive analytics for de novo malignancies after lung transplantation. Intelligent Decision Technologies. https://doi.org/10.1177/18724981241296492</div>
