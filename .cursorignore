@@ -7,6 +7,12 @@
 ehthumbs.db
 Thumbs.db
 
+# Documentation
+articles.md
+codebuddy.md
+quotes.md
+*.md
+
 # Editor directories and files
 .idea/
 .vscode/
@@ -15,6 +21,7 @@ Thumbs.db
 .vs/
 *.swp
 *.swo
+
 
 # Dependency directories
 node_modules/

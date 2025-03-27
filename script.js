@@ -960,6 +960,7 @@ class CVPlatform {
                 element.classList.contains('project') || 
                 element.classList.contains('rotation-entry') || 
                 element.classList.contains('tech-entry') || 
+                element.classList.contains('professional-entry') || 
                 element.tagName === 'TR') {
         elementGroups.entries.push(element);
       } else {

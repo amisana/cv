@@ -7,6 +7,9 @@
 ehthumbs.db
 Thumbs.db
 
+# Documentation
+*.md
+
 # Editor directories and files
 .idea/
 .vscode/

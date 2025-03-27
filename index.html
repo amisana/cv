@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cameron Kiani, MD - Curriculum Vitae</title>
@@ -179,21 +176,20 @@
         }
 
         /* EXAMINATION SECTION SPECIFIC STYLES */
-        .exam-section .exam-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .exam-section .exam-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .exam-section .exam-entry {
             display: flex;
             justify-content: space-between;
             border-bottom: 1px solid #ddd;
-            padding: 3px 0;
+            padding: 5px 0;
         }
 
-        .exam-section .exam-entry:first-child,
-        .exam-section .exam-entry:nth-child(2) {
+        .exam-section .exam-entry:first-child {
             border-top: 1px solid #ddd;
         }
 
@@ -220,17 +216,45 @@
         }
 
         .rotations-section td {
-            padding: 3px 4px;
-            vertical-align: top;
+            padding: 7px 10px;
+            vertical-align: middle;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .rotations-section td:last-child {
-            text-align: right;
-            width: 80px;
+        .rotation-title-container {
+            flex: 1;
+            min-width: 0;
+            margin-right: 15px;
         }
 
-        .rotations-section .rotation-title {
-            font-weight: normal;
+        .rotation-title {
+            display: inline-block;
+            vertical-align: middle;
+            white-space: normal;
+            text-align: left;
+        }
+
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: flex-end;
+            min-width: 160px;
+        }
+
+        .category-chip {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         /* DIGITAL PORTFOLIO SECTION SPECIFIC STYLES */
@@ -750,6 +774,368 @@
                 display: none;
             }
         }
+
+        /* Category chips styling - Outlook style */
+        .category-chip {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 2px 6px;
+            margin-right: 8px;
+            border-radius: 3px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Category colors */
+        .category-chip.selikoff {
+            background-color: #d8a5ce; /* Purple/lavender like in your Outlook example */
+        }
+
+        .category-chip.niosh {
+            background-color: #ffd866; /* Yellow */
+        }
+
+        .category-chip.mskcc {
+            background-color: #a5d8c7; /* Light teal */
+        }
+
+        .category-chip.wtc {
+            background-color: #d8c3a5; /* Tan */
+        }
+
+        .category-chip.mta {
+            background-color: #a5b9d8; /* Light blue */
+        }
+
+        .category-chip.nycdoh {
+            background-color: #d8a5a5; /* Light red */
+        }
+
+        .category-chip.mssm {
+            background-color: #c7d8a5; /* Light green */
+        }
+
+        .category-chip.osha {
+            background-color: #e6aad6; /* Pink */
+        }
+
+        .category-chip.corporate {
+            background-color: #a5d8d8; /* Light cyan */
+        }
+
+        .category-chip.pehsu {
+            background-color: #d8d8a5; /* Light yellow */
+        }
+
+        .category-chip.lifestyle {
+            background-color: #bea5d8; /* Lavender */
+        }
+
+        .category-chip.psych {
+            background-color: #e6aa83; /* Light orange */
+        }
+
+        .category-chip.medicine {
+            background-color: #aad6d1; /* Light turquoise */
+        }
+
+        .category-chip.neuro {
+            background-color: #d1aad6; /* Light purple */
+        }
+
+        /* PROFESSIONAL EXPERIENCES SECTION SPECIFIC STYLES */
+        .professional-experiences-section {
+            margin-bottom: 30px;
+        }
+
+        .professional-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .professional-card {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .professional-card-left {
+            padding: 15px;
+            width: 30%;
+            min-width: 180px;
+            background-color: #f8f8f8;
+            border-right: 1px solid #ddd;
+        }
+
+        .professional-card-right {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .professional-company {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .professional-position {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .professional-period {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .professional-description {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .professional-subtitle {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .professional-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .professional-list li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 767px) {
+            .professional-card {
+                flex-direction: column;
+            }
+            
+            .professional-card-left {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .professional-list {
+                padding-left: 15px;
+            }
+        }
+
+        /* Print optimizations */
+        @media print {
+            .professional-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Score chips styling - similar to category chips */
+        .score-chip {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 3px;
+            color: #333;
+            text-align: center;
+            min-width: 40px;
+        }
+
+        /* Score color gradations */
+        .score-chip.score-excellent {
+            background-color: #a5d8c7; /* Light teal - similar to MSKCC */
+            color: #1a6b50; /* Darker shade for contrast */
+        }
+
+        .score-chip.score-high {
+            background-color: #bea5d8; /* Lavender - similar to lifestyle */
+            color: #5e3a94; /* Darker shade for contrast */
+        }
+
+        .score-chip.score-good {
+            background-color: #a5b9d8; /* Light blue - similar to MTA */
+            color: #2c4c7f; /* Darker shade for contrast */
+        }
+
+        .score-chip.score-pass {
+            background-color: #d8d8a5; /* Light yellow - similar to PEHSU */
+            color: #707024; /* Darker shade for contrast */
+        }
+
+        /* Mobile adjustments for exam chips */
+        @media (max-width: 767px) {
+            .score-chip {
+                font-size: 0.7rem;
+                padding: 2px 6px;
+            }
+        }
+
+        /* Platform table styling with chips */
+        .platform-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .platform-table tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .platform-table tr:first-child {
+            border-top: 1px solid #ddd;
+        }
+
+        .platform-table td:first-child {
+            width: 180px;
+            position: relative;
+            padding: 7px 4px;
+            padding-right: 90px; /* Make room for the chip */
+        }
+
+        .platform-table a {
+            display: inline-block;
+            vertical-align: middle;
+            text-decoration: none;
+            max-width: calc(100% - 80px); /* Ensure text doesn't overlap with chip */
+        }
+
+        .platform-chip {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Platform type colors */
+        .platform-chip.platform-primary {
+            background-color: #a5d8c7; /* Light teal - similar to MSKCC */
+        }
+
+        .platform-chip.platform-safety {
+            background-color: #d8a5a5; /* Light red - similar to nycdoh */
+        }
+
+        .platform-chip.platform-health {
+            background-color: #aad6d1; /* Light turquoise - similar to medicine */
+        }
+
+        .platform-chip.platform-infra {
+            background-color: #d8c3a5; /* Tan - similar to wtc */
+        }
+
+        .platform-chip.platform-enterprise {
+            background-color: #a5d8d8; /* Light cyan - similar to corporate */
+        }
+
+        .platform-chip.platform-analytics {
+            background-color: #a5b9d8; /* Light blue - similar to MTA */
+        }
+
+        .platform-chip.platform-tech {
+            background-color: #e6aad6; /* Pink - similar to OSHA */
+        }
+
+        .platform-chip.platform-project {
+            background-color: #bea5d8; /* Lavender - similar to lifestyle */
+        }
+
+        .platform-chip.platform-resource {
+            background-color: #d8d8a5; /* Light yellow - similar to PEHSU */
+        }
+
+        .platform-chip.platform-personal {
+            background-color: #c7d8a5; /* Light green - similar to MSSM */
+        }
+
+        .platform-chip.platform-social {
+            background-color: #d8a5ce; /* Purple/lavender - similar to Selikoff */
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 767px) {
+            .platform-table td:first-child {
+                padding-right: 70px;
+            }
+            
+            .platform-chip {
+                font-size: 0.65rem;
+                padding: 1px 5px;
+            }
+            
+            .platform-table a {
+                max-width: calc(100% - 60px);
+            }
+        }
+
+        /* Add these new category styles to your existing category-chip styles */
+        .category-chip.medicine {
+            background-color: #aad6d1; /* Light turquoise - similar to existing medicine */
+        }
+
+        .category-chip.neuro {
+            background-color: #d1aad6; /* Light purple - similar to existing neuro */
+        }
+
+        .category-chip.oem {
+            background-color: #b5d1e8; /* Light blue - new for OEM */
+        }
+
+        .category-chip.ehs {
+            background-color: #86c3e8; /* Slightly darker blue - for EHS subcategory */
+        }
+
+        .category-chip.virtual {
+            background-color: #e6e6a5; /* Light yellow - new for virtual/course */
+        }
+
+        .category-chip.psych {
+            background-color: #e6aa83; /* Light orange - similar to existing psych */
+        }
+
+        .category-chip.research {
+            background-color: #d8a5ce; /* Purple/lavender - new for research */
+        }
+
+        .category-chip.ih {
+            background-color: #d8a5a5; /* Light red - new for ih/safety */
+        }
+
+        .category-chip.medicine-msk {
+            background-color: #a5d8c7; /* Light teal - for MEDICINE/MSK subcategory */
+        }
+
+        /* Update styling for rows with multiple chips */
+        .rotation-title {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: left;
+            max-width: calc(100% - 200px); /* Increased space for multiple chips */
+        }
+
+        /* Adjust chip spacing when multiple are present */
+        .category-chip + .category-chip {
+            margin-left: 2px; /* Increase spacing between adjacent chips */
+        }
     </style>
     <!-- Intersection Observer for scroll animations -->
     <script>
@@ -1131,25 +1517,25 @@
         <div class="section exam-section">
             <div class="section-title">Examinations</div>
             
-            <div class="exam-grid">
+            <div class="exam-list">
                 <div class="exam-entry">
                     <div class="exam-name">Step 1 Basic Sciences</div>
-                    <div class="exam-score">240</div>
+                    <div class="exam-score"><span class="score-chip score-high">240</span></div>
                 </div>
                 
                 <div class="exam-entry">
                     <div class="exam-name">Step 2 Clinical Knowledge</div>
-                    <div class="exam-score">263</div>
+                    <div class="exam-score"><span class="score-chip score-excellent">263</span></div>
                 </div>
                 
                 <div class="exam-entry">
                     <div class="exam-name">Step 2 Clinical Skills</div>
-                    <div class="exam-score">Pass</div>
+                    <div class="exam-score"><span class="score-chip score-pass">Pass</span></div>
                 </div>
                 
                 <div class="exam-entry">
                     <div class="exam-name">Step 3</div>
-                    <div class="exam-score">Pass</div>
+                    <div class="exam-score"><span class="score-chip score-pass">Pass</span></div>
                 </div>
             </div>
         </div>
@@ -1157,44 +1543,320 @@
         <div class="section rotations-section">
             <div class="section-title">Rotations/Clinical Experiences</div>
             <table>
-                <tr><td><span class="rotation-title">Selikoff Center for Occupational Medicine</span></td><td>Ongoing</td></tr>
-                <tr><td><span class="rotation-title">NIOSH Occupational Health/Medicine Rotation/Scholarship</span></td><td>Upcoming</td></tr>
-                <tr><td><span class="rotation-title">Memorial Sloan Kettering Cancer Center Occupational Health</span></td><td>2 M (Present)</td></tr>
-                <tr><td><span class="rotation-title">WTC Monitoring & Treatment at Selikoff Center</span></td><td>1 M</td></tr>
-                <tr><td><span class="rotation-title">Metropolitan Transit Authority (MTA) Occupational Health</span></td><td>3 M</td></tr>
-                <tr><td><span class="rotation-title">NYC DOH WTC Registry</span></td><td>2 M</td></tr>
-                <tr><td><span class="rotation-title">MSSM Ambulatory Pulmonology and Respiratory Institute</span></td><td>1 M</td></tr>
-                <tr><td><span class="rotation-title">MSSM Musculoskeletal Radiology</span></td><td>1 M</td></tr>
-                <tr><td><span class="rotation-title">MSSM Physical Medicine & Rehabilitation</span></td><td>2 M</td></tr>
-                <tr><td><span class="rotation-title">New York Occupational Safety and Health Administration</span></td><td>2 M</td></tr>
-                <tr><td><span class="rotation-title">Con Edison, Employee Health Center</span></td><td>2 M</td></tr>
-                <tr><td><span class="rotation-title">Pediatric Environmental Health Specialty Units</span></td><td>1 M</td></tr>
-                <tr><td><span class="rotation-title">Lifestyle Medicine Elective</span></td><td>1 M</td></tr>
-                <tr><td><span class="rotation-title">BASF Occupational & Environmental Medicine Course</span></td><td>2 M</td></tr>
-                <tr><td><span class="rotation-title">Acute Inpatient Psychiatry</span></td><td>4 M</td></tr>
-                <tr><td><span class="rotation-title">Emergency Psychiatry</span></td><td>2 M</td></tr>
-                <tr><td><span class="rotation-title">Inpatient Medicine</span></td><td>3 M</td></tr>
-                <tr><td><span class="rotation-title">Ambulatory Medicine</span></td><td>1 M</td></tr>
-                <tr><td><span class="rotation-title">Neurology (Inpatient & Consult)</span></td><td>2 M</td></tr>
+                <!-- MEDICINE Category -->
+                <tr>
+                    <td>
+                        <div class="rotation-title-container">
+                            <span class="rotation-title">Inpatient Medicine</span>
+                        </div>
+                        <div class="chip-container">
+                            <span class="category-chip medicine-msk">MEDICINE/MSK</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Ambulatory Medicine</span>
+                        <span class="category-chip medicine">MEDICINE</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Inpatient Pediatrics/Adolescent</span>
+                        <span class="category-chip medicine">MEDICINE</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">MSSM Ambulatory Pulmonology and Respiratory Institute</span>
+                        <span class="category-chip medicine">MEDICINE</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="rotation-title-container">
+                            <span class="rotation-title">MSSM Musculoskeletal Radiology</span>
+                        </div>
+                        <div class="chip-container">
+                            <span class="category-chip medicine-msk">MEDICINE/MSK</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">MSSM Physical Medicine & Rehabilitation</span>
+                        <span class="category-chip medicine-msk">MEDICINE/MSK</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Palliative Medicine</span>
+                        <span class="category-chip medicine">MEDICINE</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Selikoff Center for Occupational Medicine</span>
+                        <span class="category-chip medicine-msk">MEDICINE/MSK</span>
+                    </td>
+                </tr>
+
+                <!-- NEURO Category -->
+                <tr>
+                    <td>
+                        <span class="rotation-title">Inpatient Neurology</span>
+                        <span class="category-chip neuro">NEURO</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Consultation Neurology</span>
+                        <span class="category-chip neuro">NEURO</span>
+                    </td>
+                </tr>
+
+                <!-- OEM Category -->
+                <tr>
+                    <td>
+                        <span class="rotation-title">Con Edison, Employee Health Center</span>
+                        <span class="category-chip oem">OEM</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Memorial Sloan Kettering Cancer Center Occupational Health</span>
+                        <span class="category-chip ehs">EHS</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Metropolitan Transit Authority (MTA) Occupational Health</span>
+                        <span class="category-chip ehs">EHS</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">WTC Monitoring & Treatment at Selikoff Center</span>
+                        <span class="category-chip oem">OEM</span>
+                    </td>
+                </tr>
+
+                <!-- VIRTUAL/COURSE Category -->
+                <tr>
+                    <td>
+                        <span class="rotation-title">BASF Occupational & Environmental Medicine Course</span>
+                        <span class="category-chip virtual">VIRTUAL/COURSE</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Lifestyle Medicine Elective</span>
+                        <span class="category-chip virtual">VIRTUAL/COURSE</span>
+                    </td>
+                </tr>
+
+                <!-- PSYCH Category -->
+                <tr>
+                    <td>
+                        <span class="rotation-title">Acute Inpatient Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Emergency Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Geriatric Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Consult-Liaison Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Child & Adolescent Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+
+                <!-- RESEARCH Category -->
+                <tr>
+                    <td>
+                        <span class="rotation-title">NYC DOH WTC Registry</span>
+                        <span class="category-chip research">RESEARCH</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Pediatric Environmental Health Specialty Units</span>
+                        <span class="category-chip research">RESEARCH</span>
+                    </td>
+                </tr>
+
+                <!-- SAFETY Category -->
+                <tr>
+                    <td>
+                        <span class="rotation-title">NIOSH Occupational Health/Medicine Rotation/Scholarship</span>
+                        <span class="category-chip ih">SAFETY/IH</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">New York Occupational Safety and Health Administration</span>
+                        <span class="category-chip ih">SAFETY/IH</span>
+                    </td>
+                </tr>
             </table>
+        </div>
+
+        <div class="section professional-experiences-section">
+            <div class="section-title">Professional Experiences</div>
+            
+            <div class="professional-grid">
+                <!-- Amisana Solutions Entry -->
+                <div class="professional-card">
+                    <div class="professional-card-left">
+                        <div class="professional-company">Amisana Solutions LLC</div>
+                        <div class="professional-position">Founder & Owner</div>
+                        <div class="professional-period">2022 – Present</div>
+                    </div>
+                    <div class="professional-card-right">
+                        <div class="professional-description">
+                            Specializes in bridging the gap between businesses and emerging technologies (particularly Generative AI & LLMs)
+                        </div>
+                        <div class="professional-subtitle">Key Projects</div>
+                        <ul class="professional-list">
+                            <li>IP Litigation Against Fortune 15 Company</li>
+                            <li>Walters-Kluwer Carve Out (See BCM)</li>
+                            <li>Plastics Extruder: Utilizing Computer Vision</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Beaconhouse Capital Management Entry -->
+                <div class="professional-card">
+                    <div class="professional-card-left">
+                        <div class="professional-company">Beaconhouse Capital Management</div>
+                        <div class="professional-position">Board Member, AI/Tech Strategy</div>
+                        <div class="professional-period">2024 – Present</div>
+                    </div>
+                    <div class="professional-card-right">
+                        <ul class="professional-list">
+                            <li>Walters-Kluwer carve-out due diligence and investment memo</li>
+                            <li>Developed 90/180-day integration plan, identifying $3M in cost synergies</li>
+                            <li>Evaluated CME content across specialties, targeting $5M revenue potential</li>
+                            <li>Building AI-enabled platform modernization strategy focused on OccMed/Health</li>
+                            <li>Advising on healthcare tech trends and M&A opportunities within CME space</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Alterra Holdings Entry -->
+                <div class="professional-card">
+                    <div class="professional-card-left">
+                        <div class="professional-company">Alterra Holdings</div>
+                        <div class="professional-position">Consultant</div>
+                        <div class="professional-period">2022 – Present</div>
+                    </div>
+                    <div class="professional-card-right">
+                        <ul class="professional-list">
+                            <li>Provided guidance on worker wellness and safety</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="section portfolio-section">
             <div class="section-title">Digital Portfolio</div>
             
             <div class="portfolio-category">AI & TECHNOLOGY PLATFORMS</div>
-            <table>
-                <tr><td><a href="https://OCCMED.AI">OCCMED.AI</a></td><td>Primary professional practice portal</td></tr>
-                <tr><td><a href="https://SAFETYSENTINEL.APP">SAFETYSENTINEL.APP</a></td><td>AI-powered occupational safety analysis platform</td></tr>
-                <tr><td><a href="https://OCCDOC.AI">OCCDOC.AI</a></td><td>Healthcare technology integration platform</td></tr>
-                <tr><td><a href="https://JEVONSPARADOX.AI">JEVONSPARADOX.AI</a></td><td>Data center infrastructure & occupational analysis</td></tr>
-                <tr><td><a href="https://AMISANA.AI">AMISANA.AI</a></td><td>AI solutions & enterprise implementation</td></tr>
-                <tr><td><a href="https://DATA_INDEX.AI">DATA_INDEX.AI</a></td><td>Analytics & metrics platform</td></tr>
-                <tr><td><a href="https://TERMINAL.AI">TERMINAL.AI</a></td><td>Technical interface system</td></tr>
-                <tr><td><a href="https://THIP.AI">THIP.AI</a></td><td>Human Instrumentality Project</td></tr>
-                <tr><td><a href="https://FALLSUMMIT.CARD.CO">FALLSUMMIT.CARD.CO</a></td><td>ACOEM AI Resources & Guidance</td></tr>
-                <tr><td><a href="https://KIANIMD.COM">KIANIMD.COM</a></td><td>Professional link aggregator</td></tr>
-                <tr><td><a href="https://LINKEDIN.COM/IN/KIANIMD">LINKEDIN.COM/IN/KIANIMD</a></td><td>Professional updates & insights</td></tr>
+            <table class="platform-table">
+                <tr>
+                    <td>
+                        <a href="https://OCCMED.AI">OCCMED.AI</a>
+                        <span class="platform-chip platform-primary">Primary</span>
+                    </td>
+                    <td>Primary professional practice portal</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://SAFETYSENTINEL.APP">SAFETYSENTINEL.APP</a>
+                        <span class="platform-chip platform-safety">Safety</span>
+                    </td>
+                    <td>AI-powered occupational safety analysis platform</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://OCCDOC.AI">OCCDOC.AI</a>
+                        <span class="platform-chip platform-health">Health</span>
+                    </td>
+                    <td>Healthcare technology integration platform</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://JEVONSPARADOX.AI">JEVONSPARADOX.AI</a>
+                        <span class="platform-chip platform-infra">Infra</span>
+                    </td>
+                    <td>Data center infrastructure & occupational analysis</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://AMISANA.AI">AMISANA.AI</a>
+                        <span class="platform-chip platform-enterprise">Enterprise</span>
+                    </td>
+                    <td>AI solutions & enterprise implementation</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://DATA_INDEX.AI">DATA_INDEX.AI</a>
+                        <span class="platform-chip platform-analytics">Analytics</span>
+                    </td>
+                    <td>Analytics & metrics platform</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://TERMINAL.AI">TERMINAL.AI</a>
+                        <span class="platform-chip platform-tech">Tech</span>
+                    </td>
+                    <td>Technical interface system</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://THIP.AI">THIP.AI</a>
+                        <span class="platform-chip platform-project">Project</span>
+                    </td>
+                    <td>Human Instrumentality Project</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://FALLSUMMIT.CARD.CO">FALLSUMMIT.CARD.CO</a>
+                        <span class="platform-chip platform-resource">Resource</span>
+                    </td>
+                    <td>ACOEM AI Resources & Guidance</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://KIANIMD.COM">KIANIMD.COM</a>
+                        <span class="platform-chip platform-personal">Personal</span>
+                    </td>
+                    <td>Professional link aggregator</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://LINKEDIN.COM/IN/KIANIMD">LINKEDIN.COM/IN/KIANIMD</a>
+                        <span class="platform-chip platform-social">Social</span>
+                    </td>
+                    <td>Professional updates & insights</td>
+                </tr>
             </table>
             
             <div class="portfolio-category">FEATURED PROJECTS</div>
@@ -1231,6 +1893,10 @@
             </div>
             
             <div class="project">
+                <div class="project-title">Zadeh, A., Nosoudi, N., Halley, R., Kiani, C., & Ramirez-Vick, J. E. (2024). Predictive analytics for de novo malignancies after lung transplantation. Intelligent Decision Technologies. https://doi.org/10.1177/18724981241296492</div>
+            </div>
+            
+            <div class="project">
                 <div class="project-title">Kiani, C., & Berenji, M. (2024). Navigating the AI Wave: A Framework for Understanding Occupational Impact and Adaptation. Presented at the 2024 ACOEM Fall Summit, Virtual Webinar, November 7, 2024.</div>
             </div>
             
@@ -1240,6 +1906,22 @@
             
             <div class="project">
                 <div class="project-title">Kiani, C., Luisi, D., Dumanovsky, T., Jaber, M., Bienenfeld, L., & Gonzales, N. (2024). Enhancing transportation safety through sleep apnea management: The Metropolitan Transportation Authority's OSA program. Poster. American Occupational Health Conference (AOHC), Orlando, FL May 19-22, 2024.</div>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">Holoyda, B., & Kiani, C. (2023). Establishing an Ethics for Psychedelic Psychiatry. Psychiatric Services, 74(8), 789. https://doi.org/10.1176/appi.ps.23074013</div>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">Kiani, C. (2020). Tranylcypromine: Its pharmacology, safety, and efficacy. The American Journal of Psychiatry Residents' Journal, 15(4), 3–5. https://doi.org/10.1176/appi.ajp-rj.2020.150402</div>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">Kiani, C., Otero, K., Taufique, S., & Ivanov, I. (2018). Chronic absenteeism: a brief review of causes, course and treatment. 8(3), 214–230. https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=FwS59QSG91wC:u-x6o8ySG0sC</div>
+            </div>
+            
+            <div class="project">
+                <div class="project-title">Kim, K., Mann, S., Kiani, C. H., Otero, K., Taufique, S. R., & Ivanov, I. (2016). 5.37 clinical outcomes in school-avoidant adolescents receiving treatment in a day-hospital setting. Journal of the American Academy of Child and Adolescent Psychiatry, 55(10), S195. https://doi.org/10.1016/j.jaac.2016.09.295</div>
             </div>
         </div>
         
@@ -1643,6 +2325,64 @@
                 behavior: 'smooth'
             });
         }
+    </script>
+
+    <!-- Add this right after your existing script tag -->
+    <script>
+        // Check if the user is coming from quotes.html
+        document.addEventListener('DOMContentLoaded', function() {
+            const referrer = document.referrer;
+            // Skip intro animation if coming from quotes.html
+            if (referrer.includes('quotes.html')) {
+                const introElement = document.querySelector('.intro-animation');
+                if (introElement) {
+                    introElement.style.display = 'none';
+                    
+                    // If you're using the CVPlatform class, also set the state
+                    if (window.cvPlatform) {
+                        window.cvPlatform.state.introAnimationComplete = true;
+                        
+                        // Trigger post-intro tasks to ensure content animations work
+                        window.cvPlatform.triggerPostIntroTasks();
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Add this right after your intro animation div -->
+    <script>
+        // Handle intro animation skip/display logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const introElement = document.querySelector('.intro-animation');
+            
+            // Check if we've shown the intro before in this session
+            const hasViewedIntro = localStorage.getItem('hasViewedIntro');
+            
+            if (hasViewedIntro === 'true' || document.referrer.includes('quotes.html')) {
+                // Skip intro animation completely
+                if (introElement) {
+                    introElement.style.animation = 'none';
+                    introElement.style.display = 'none';
+                }
+                
+                // Add class to body to indicate intro is skipped
+                document.body.classList.add('intro-skipped');
+                
+                // Initialize animations immediately instead of waiting
+                document.querySelectorAll('.animate-ready').forEach(el => {
+                    el.classList.add('animate-in');
+                });
+            } else {
+                // First visit - store that we've shown the intro
+                localStorage.setItem('hasViewedIntro', 'true');
+                
+                // Make sure intro is showing (redundant but ensures consistency)
+                if (introElement) {
+                    introElement.style.display = 'flex';
+                }
+            }
+        });
     </script>
 </body>
 </html>
