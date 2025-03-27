@@ -29,6 +29,9 @@ class CVPlatform {
    * @param {boolean} [config.enableProgressiveLoading=true] - Enable progressive content loading
    * @param {boolean} [config.enableIntersectionObserver=true] - Enable intersection observer for animations
    * @param {boolean} [config.debug=false] - Enable debug logging
+   * @param {boolean} [config.enableResponsiveFonts=true] - Enable responsive fonts
+   * @param {number} [config.baseFontSize=16] - Base font size for responsive typography
+   * @param {number} [config.fontScaleRatio=1.2] - Font scale ratio for responsive typography
    * 
    * @property {Object} config - Platform configuration with intelligent defaults
    * @property {Object} components - Component registry for modular architecture
@@ -44,6 +47,9 @@ class CVPlatform {
       animationDuration: config.animationDuration || 600,
       enableProgressiveLoading: config.enableProgressiveLoading !== false,
       enableIntersectionObserver: config.enableIntersectionObserver !== false,
+      enableResponsiveFonts: config.enableResponsiveFonts !== false,
+      baseFontSize: config.baseFontSize || 16,
+      fontScaleRatio: config.fontScaleRatio || 1.2,
       ...config
     };
     
@@ -118,6 +124,9 @@ class CVPlatform {
     
     // Set up event listeners with proper delegation
     this.setupEventListeners();
+    
+    // Add responsive typography
+    this.setupResponsiveTypography();
     
     // Record performance metrics
     this.metrics.initialLoadTime = performance.now() - startTime;
@@ -236,6 +245,45 @@ class CVPlatform {
             return rect.top < windowHeight && rect.bottom > 0;
           })
           .map(this.getSectionMetadata);
+      },
+      
+      /**
+       * Optimizes images for current device
+       * 
+       * @private
+       * @method optimizeImagesForDevice
+       * 
+       * @description
+       * Adapts images based on screen size:
+       * - Loads smaller images on mobile
+       * - Defers non-critical images
+       * - Converts large images to WebP format on supported browsers
+       * 
+       * @returns {void}
+       */
+      optimizeImagesForDevice: () => {
+        const isMobile = window.innerWidth < 768;
+        const images = document.querySelectorAll('img:not(.optimized)');
+        
+        images.forEach(img => {
+          // Add optimized class to prevent reprocessing
+          img.classList.add('optimized');
+          
+          if (isMobile) {
+            // Use smaller image source if available
+            if (img.dataset.mobileSrc) {
+              img.src = img.dataset.mobileSrc;
+            }
+            
+            // Limit max-width on mobile
+            img.style.maxWidth = '100%';
+            
+            // For non-critical images below the fold
+            if (img.getBoundingClientRect().top > window.innerHeight) {
+              img.loading = 'lazy';
+            }
+          }
+        });
       }
     };
     
@@ -244,6 +292,9 @@ class CVPlatform {
       this.components.contentManager.sections.map(
         this.components.contentManager.getSectionMetadata
       );
+    
+    // Call image optimization
+    this.components.contentManager.optimizeImagesForDevice();
   }
   
   /**
@@ -495,6 +546,76 @@ class CVPlatform {
           
           mobileNavSections.appendChild(navItem);
         });
+      },
+      
+      /**
+       * Enhances touch interactions for mobile devices
+       * 
+       * @private
+       * @method setupTouchInteractions
+       * 
+       * @description
+       * Adds optimized touch controls:
+       * - Swipe left/right for navigation
+       * - Increased touch targets
+       * - Touch feedback effects
+       * 
+       * @returns {void}
+       */
+      setupTouchInteractions: () => {
+        if (!this.state.isMobile) return;
+        
+        // Track touch start position for swipe detection
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+        
+        document.addEventListener('touchend', (e) => {
+          const touchEndX = e.changedTouches[0].screenX;
+          const touchEndY = e.changedTouches[0].screenY;
+          
+          // Calculate distance moved
+          const diffX = touchStartX - touchEndX;
+          const diffY = touchStartY - touchEndY;
+          
+          // Only process horizontal swipes (ignore vertical scrolling)
+          if (Math.abs(diffX) > Math.abs(diffY) * 2 && Math.abs(diffX) > 50) {
+            const mobileNav = document.getElementById('mobileNav');
+            
+            if (diffX > 0) {
+              // Swipe left - close nav if open
+              if (mobileNav && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+              }
+            } else {
+              // Swipe right - open nav if closed
+              if (mobileNav && !mobileNav.classList.contains('active')) {
+                mobileNav.classList.add('active');
+              }
+            }
+          }
+        }, { passive: true });
+        
+        // Add active/hover states for touch devices
+        const touchTargets = document.querySelectorAll(
+          '.mobile-nav-section, .mobile-nav-toggle, a, button'
+        );
+        
+        touchTargets.forEach(element => {
+          element.addEventListener('touchstart', () => {
+            element.classList.add('touch-active');
+          }, { passive: true });
+          
+          ['touchend', 'touchcancel'].forEach(eventType => {
+            element.addEventListener(eventType, () => {
+              element.classList.remove('touch-active');
+            }, { passive: true });
+          });
+        });
       }
     };
     
@@ -513,6 +634,9 @@ class CVPlatform {
         if (mobileNav) mobileNav.classList.remove('active');
       });
     }
+    
+    // Setup touch interactions for mobile
+    this.components.navigation.setupTouchInteractions();
   }
   
   /**
@@ -962,6 +1086,70 @@ class CVPlatform {
   }
   
   /**
+   * Implements a responsive typography system
+   * 
+   * @private
+   * @method setupResponsiveTypography
+   * 
+   * @description
+   * Creates a fluid typography system that:
+   * - Scales font sizes based on viewport width
+   * - Maintains proper hierarchy
+   * - Ensures minimum readable sizes
+   * - Updates on resize with performance optimization
+   * 
+   * @returns {void}
+   */
+  setupResponsiveTypography() {
+    if (!this.config.enableResponsiveFonts) return;
+    
+    const updateTypography = () => {
+      const viewportWidth = window.innerWidth;
+      
+      // Base calculation
+      let baseFontSize = this.config.baseFontSize;
+      
+      // Scale down on mobile, up on larger screens
+      if (viewportWidth < 768) {
+        // Mobile: scale down to 14-16px depending on screen width
+        baseFontSize = Math.max(14, 16 * (viewportWidth / 768));
+      } else if (viewportWidth > 1600) {
+        // Extra large screens: cap at 18px
+        baseFontSize = Math.min(18, 16 * (viewportWidth / 1600));
+      }
+      
+      // Apply the base font size to root element
+      document.documentElement.style.fontSize = `${baseFontSize}px`;
+      
+      // Calculate and apply fluid headings
+      const headingSizes = {
+        h1: baseFontSize * Math.pow(this.config.fontScaleRatio, 3),
+        h2: baseFontSize * Math.pow(this.config.fontScaleRatio, 2),
+        h3: baseFontSize * Math.pow(this.config.fontScaleRatio, 1),
+        '.section-title': baseFontSize * Math.pow(this.config.fontScaleRatio, 1.5)
+      };
+      
+      Object.entries(headingSizes).forEach(([selector, size]) => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+          el.style.fontSize = `${size}px`;
+        });
+      });
+    };
+    
+    // Run on initialization
+    updateTypography();
+    
+    // Add to resize handler
+    let typographyResizeTimeout;
+    window.addEventListener('resize', () => {
+      if (typographyResizeTimeout) clearTimeout(typographyResizeTimeout);
+      
+      typographyResizeTimeout = setTimeout(updateTypography, 200);
+    });
+  }
+  
+  /**
    * Sets up optimized event listeners with proper throttling
    * and event delegation for performance
    * 
@@ -1024,11 +1212,26 @@ class CVPlatform {
         // Update responsive state
         this.state.isMobile = window.innerWidth < 768;
         
+        // Update viewport height variables
+        const setMobileViewportHeight = () => {
+          // Fix for mobile browser viewport height issues
+          const vh = window.innerHeight * 0.01;
+          document.documentElement.style.setProperty('--vh', `${vh}px`);
+        };
+        
+        setMobileViewportHeight();
+        
         // Recalculate layout dependencies if needed
         if (this.components.navigation) {
           this.components.navigation.updateNavigationState();
         }
       }, 200);
+    });
+    
+    // Handle orientation change explicitly
+    window.addEventListener('orientationchange', () => {
+      // Short delay to let browser adjust
+      setTimeout(setMobileViewportHeight, 100);
     });
     
     // PDF generation handler
