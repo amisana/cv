@@ -1384,6 +1384,9 @@ class CVPlatform {
           container.classList.add('cv-tooltip-visible');
           container.setAttribute('aria-hidden', 'false');
           
+          // Adjust position to ensure it's in viewport
+          this.adjustTooltipPosition(container);
+          
           // Set aria attributes for accessibility
           targetElement.setAttribute('aria-describedby', 'cv-tooltip-container');
           
@@ -1428,8 +1431,64 @@ class CVPlatform {
       },
       
       adjustTooltipPosition(tooltip) {
-        // Position adjustment logic (unchanged)
-        // ...
+        if (!tooltip) return;
+        
+        // Get tooltip dimensions
+        const tooltipRect = tooltip.getBoundingClientRect();
+        
+        // Get viewport dimensions
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        // Get current position values
+        const currentLeft = parseFloat(tooltip.style.left);
+        const currentTop = parseFloat(tooltip.style.top);
+        
+        // Handle horizontal positioning
+        if (tooltipRect.right > viewportWidth - 10) {
+          // Too far right - adjust left position
+          tooltip.style.left = `${viewportWidth - tooltipRect.width - 10}px`;
+          
+          // If using right position, switch to left
+          if (tooltip.classList.contains('cv-tooltip-right')) {
+            tooltip.classList.remove('cv-tooltip-right');
+            tooltip.classList.add('cv-tooltip-left');
+            tooltip.style.transform = 'translate(-100%, -50%)';
+          }
+        } else if (tooltipRect.left < 10) {
+          // Too far left - adjust left position
+          tooltip.style.left = '10px';
+          
+          // If using left position, switch to right
+          if (tooltip.classList.contains('cv-tooltip-left')) {
+            tooltip.classList.remove('cv-tooltip-left');
+            tooltip.classList.add('cv-tooltip-right');
+            tooltip.style.transform = 'translate(0, -50%)';
+          }
+        }
+        
+        // Handle vertical positioning
+        if (tooltipRect.bottom > viewportHeight - 10) {
+          // Too far down - adjust top position
+          tooltip.style.top = `${viewportHeight - tooltipRect.height - 10}px`;
+          
+          // If using bottom position, switch to top
+          if (tooltip.classList.contains('cv-tooltip-bottom')) {
+            tooltip.classList.remove('cv-tooltip-bottom');
+            tooltip.classList.add('cv-tooltip-top');
+            tooltip.style.transform = 'translate(-50%, -100%)';
+          }
+        } else if (tooltipRect.top < 10) {
+          // Too far up - adjust top position
+          tooltip.style.top = '10px';
+          
+          // If using top position, switch to bottom
+          if (tooltip.classList.contains('cv-tooltip-top')) {
+            tooltip.classList.remove('cv-tooltip-top');
+            tooltip.classList.add('cv-tooltip-bottom');
+            tooltip.style.transform = 'translate(-50%, 0)';
+          }
+        }
       },
       
       initialize() {

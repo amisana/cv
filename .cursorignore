@@ -13,6 +13,10 @@ codebuddy.md
 quotes.md
 *.md
 
+#Code files
+quotes.html
+*.txt
+
 # Editor directories and files
 .idea/
 .vscode/
