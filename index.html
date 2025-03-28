@@ -1243,6 +1243,10 @@
             display: none !important;
           }
         }
+
+        .hidden-rotation {
+            display: none;
+        }
     </style>
     <!-- Intersection Observer for scroll animations -->
     <script>
@@ -1623,6 +1627,194 @@
             </div>
         </div>
 
+        <div class="section rotations-section">
+            <div class="section-title">Rotations/Clinical Experiences</div>
+            <table>
+                <!-- Only show these 6 specific rotations -->
+                <tr>
+                    <td>
+                        <span class="rotation-title">Selikoff Center for Occupational Medicine</span>
+                        <span class="category-chip medicine-msk">MEDICINE/MSK</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">New York Occupational Safety and Health Administration</span>
+                        <span class="category-chip ih">SAFETY/IH</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">MSSM Physical Medicine & Rehabilitation</span>
+                        <span class="category-chip medicine-msk">MEDICINE/MSK</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Memorial Sloan Kettering Cancer Center Occupational Health</span>
+                        <span class="category-chip ehs">EHS</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">Metropolitan Transit Authority (MTA) Occupational Health</span>
+                        <span class="category-chip ehs">EHS</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="rotation-title">WTC Monitoring & Treatment at Selikoff Center</span>
+                        <span class="category-chip oem">OEM</span>
+                    </td>
+                </tr>
+                
+                <!-- Toggle button after the 6 visible rotations -->
+                <tr id="rotations-toggle-row">
+                    <td style="text-align: center; padding: 10px;">
+                        <button id="rotations-toggle-btn" style="background: none; border: 1px solid #ddd; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+                            <i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Show More Rotations
+                        </button>
+                    </td>
+                </tr>
+                
+                <!-- All other rotations should have the hidden-rotation class -->
+                <tr class="hidden-rotation">
+                    <td>
+                        <div class="rotation-title-container">
+                            <span class="rotation-title">Inpatient Medicine</span>
+                        </div>
+                        <div class="chip-container">
+                            <span class="category-chip medicine-msk">MEDICINE/MSK</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Ambulatory Medicine</span>
+                        <span class="category-chip medicine">MEDICINE</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Inpatient Pediatrics/Adolescent</span>
+                        <span class="category-chip medicine">MEDICINE</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">MSSM Ambulatory Pulmonology and Respiratory Institute</span>
+                        <span class="category-chip medicine">MEDICINE</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <div class="rotation-title-container">
+                            <span class="rotation-title">MSSM Musculoskeletal Radiology</span>
+                        </div>
+                        <div class="chip-container">
+                            <span class="category-chip medicine-msk">MEDICINE/MSK</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Palliative Medicine</span>
+                        <span class="category-chip medicine">MEDICINE</span>
+                    </td>
+                </tr>
+                
+                <!-- NEURO Category - all hidden -->
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Inpatient Neurology</span>
+                        <span class="category-chip neuro">NEURO</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Consultation Neurology</span>
+                        <span class="category-chip neuro">NEURO</span>
+                    </td>
+                </tr>
+                
+                <!-- OEM Category - keep one visible, hide the rest -->
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Con Edison, Employee Health Center</span>
+                        <span class="category-chip oem">OEM</span>
+                    </td>
+                </tr>
+                
+                <!-- VIRTUAL/COURSE Category - all hidden -->
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">BASF Occupational & Environmental Medicine Course</span>
+                        <span class="category-chip virtual">VIRTUAL/COURSE</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Lifestyle Medicine Elective</span>
+                        <span class="category-chip virtual">VIRTUAL/COURSE</span>
+                    </td>
+                </tr>
+                
+                <!-- PSYCH Category - all hidden -->
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Acute Inpatient Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Emergency Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Geriatric Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Consult-Liaison Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Child & Adolescent Psychiatry</span>
+                        <span class="category-chip psych">PSYCH</span>
+                    </td>
+                </tr>
+                
+                <!-- RESEARCH Category - all hidden -->
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">NYC DOH WTC Registry</span>
+                        <span class="category-chip research">RESEARCH</span>
+                    </td>
+                </tr>
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">Pediatric Environmental Health Specialty Units</span>
+                        <span class="category-chip research">RESEARCH</span>
+                    </td>
+                </tr>
+                
+                <!-- SAFETY Category - keep one visible, hide the rest -->
+                <tr class="hidden-rotation">
+                    <td>
+                        <span class="rotation-title">NIOSH Occupational Health/Medicine Rotation/Scholarship</span>
+                        <span class="category-chip ih">SAFETY/IH</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
         <div class="section exam-section">
             <div class="section-title">Examinations</div>
             
@@ -1647,183 +1839,6 @@
                     <div class="exam-score"><span class="score-chip score-pass">Pass</span></div>
                 </div>
             </div>
-        </div>
-
-        <div class="section rotations-section">
-            <div class="section-title">Rotations/Clinical Experiences</div>
-            <table>
-                <!-- MEDICINE Category -->
-                <tr>
-                    <td>
-                        <div class="rotation-title-container">
-                            <span class="rotation-title">Inpatient Medicine</span>
-                        </div>
-                        <div class="chip-container">
-                            <span class="category-chip medicine-msk">MEDICINE/MSK</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Ambulatory Medicine</span>
-                        <span class="category-chip medicine">MEDICINE</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Inpatient Pediatrics/Adolescent</span>
-                        <span class="category-chip medicine">MEDICINE</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">MSSM Ambulatory Pulmonology and Respiratory Institute</span>
-                        <span class="category-chip medicine">MEDICINE</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="rotation-title-container">
-                            <span class="rotation-title">MSSM Musculoskeletal Radiology</span>
-                        </div>
-                        <div class="chip-container">
-                            <span class="category-chip medicine-msk">MEDICINE/MSK</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">MSSM Physical Medicine & Rehabilitation</span>
-                        <span class="category-chip medicine-msk">MEDICINE/MSK</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Palliative Medicine</span>
-                        <span class="category-chip medicine">MEDICINE</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Selikoff Center for Occupational Medicine</span>
-                        <span class="category-chip medicine-msk">MEDICINE/MSK</span>
-                    </td>
-                </tr>
-
-                <!-- NEURO Category -->
-                <tr>
-                    <td>
-                        <span class="rotation-title">Inpatient Neurology</span>
-                        <span class="category-chip neuro">NEURO</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Consultation Neurology</span>
-                        <span class="category-chip neuro">NEURO</span>
-                    </td>
-                </tr>
-
-                <!-- OEM Category -->
-                <tr>
-                    <td>
-                        <span class="rotation-title">Con Edison, Employee Health Center</span>
-                        <span class="category-chip oem">OEM</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Memorial Sloan Kettering Cancer Center Occupational Health</span>
-                        <span class="category-chip ehs">EHS</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Metropolitan Transit Authority (MTA) Occupational Health</span>
-                        <span class="category-chip ehs">EHS</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">WTC Monitoring & Treatment at Selikoff Center</span>
-                        <span class="category-chip oem">OEM</span>
-                    </td>
-                </tr>
-
-                <!-- VIRTUAL/COURSE Category -->
-                <tr>
-                    <td>
-                        <span class="rotation-title">BASF Occupational & Environmental Medicine Course</span>
-                        <span class="category-chip virtual">VIRTUAL/COURSE</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Lifestyle Medicine Elective</span>
-                        <span class="category-chip virtual">VIRTUAL/COURSE</span>
-                    </td>
-                </tr>
-
-                <!-- PSYCH Category -->
-                <tr>
-                    <td>
-                        <span class="rotation-title">Acute Inpatient Psychiatry</span>
-                        <span class="category-chip psych">PSYCH</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Emergency Psychiatry</span>
-                        <span class="category-chip psych">PSYCH</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Geriatric Psychiatry</span>
-                        <span class="category-chip psych">PSYCH</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Consult-Liaison Psychiatry</span>
-                        <span class="category-chip psych">PSYCH</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Child & Adolescent Psychiatry</span>
-                        <span class="category-chip psych">PSYCH</span>
-                    </td>
-                </tr>
-
-                <!-- RESEARCH Category -->
-                <tr>
-                    <td>
-                        <span class="rotation-title">NYC DOH WTC Registry</span>
-                        <span class="category-chip research">RESEARCH</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">Pediatric Environmental Health Specialty Units</span>
-                        <span class="category-chip research">RESEARCH</span>
-                    </td>
-                </tr>
-
-                <!-- SAFETY Category -->
-                <tr>
-                    <td>
-                        <span class="rotation-title">NIOSH Occupational Health/Medicine Rotation/Scholarship</span>
-                        <span class="category-chip ih">SAFETY/IH</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="rotation-title">New York Occupational Safety and Health Administration</span>
-                        <span class="category-chip ih">SAFETY/IH</span>
-                    </td>
-                </tr>
-            </table>
         </div>
 
         <div class="section professional-experiences-section">
@@ -2691,6 +2706,35 @@
                     introElement.style.display = 'flex';
                 }
             }
+        });
+    </script>
+
+    <!-- Add this right after your existing script tag -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rotationsToggleBtn = document.getElementById('rotations-toggle-btn');
+            const hiddenRotations = document.querySelectorAll('.hidden-rotation');
+            let rotationsExpanded = false;
+            
+            // Skip if elements don't exist
+            if (!rotationsToggleBtn || hiddenRotations.length === 0) return;
+            
+            rotationsToggleBtn.addEventListener('click', function() {
+                if (rotationsExpanded) {
+                    // Hide rotations
+                    hiddenRotations.forEach(rotation => {
+                        rotation.style.display = 'none';
+                    });
+                    rotationsToggleBtn.innerHTML = '<i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Show More Rotations';
+                } else {
+                    // Show rotations
+                    hiddenRotations.forEach(rotation => {
+                        rotation.style.display = 'table-row';
+                    });
+                    rotationsToggleBtn.innerHTML = '<i class="fas fa-minus-circle" style="margin-right: 5px;"></i> Show Less';
+                }
+                rotationsExpanded = !rotationsExpanded;
+            });
         });
     </script>
 </body>
