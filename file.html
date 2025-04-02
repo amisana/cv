@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Occupational Medicine Expertise Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3269a8;
+            --secondary: #4a8dca;
+            --accent: #f5a623;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f4f8;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #e6951a;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(50, 105, 168, 0.8), rgba(50, 105, 168, 0.9)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .search-bar {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+        }
+        
+        .search-bar button {
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar button:hover {
+            background: #e6951a;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h3:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: var(--accent);
+            bottom: -10px;
+            left: 25%;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            color: var(--dark);
+            opacity: 0.8;
+        }
+        
+        /* Experts Section */
+        .experts {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+        
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .expert-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .expert-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .expert-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .expert-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .expert-info {
+            padding: 1.5rem;
+        }
+        
+        .expert-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .expert-specialty {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .expert-rating {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .expert-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .expert-btn:hover {
+            background: var(--secondary);
+        }
+        
+        /* Resources Section */
+        .resources {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .resources-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--light);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .resource-card {
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-img {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .resource-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .resource-content {
+            padding: 1.5rem;
+        }
+        
+        .resource-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+        
+        .resource-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-content p {
+            font-size: 0.9rem;
+            color: var(--dark);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-link:hover {
+            color: var(--secondary);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 4rem 0;
+            background: linear-gradient(rgba(50, 105, 168, 0.9), rgba(50, 105, 168, 0.9)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-slide {
+            padding: 2rem;
+            display: none;
+            animation: fadeIn 1s ease;
+        }
+        
+        .testimonial-slide.active {
+            display: block;
+        }
+        
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .testimonial-text:before, .testimonial-text:after {
+            content: '"';
+            font-size: 3rem;
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .testimonial-text:before {
+            top: -20px;
+            left: -10px;
+        }
+        
+        .testimonial-text:after {
+            bottom: -40px;
+            right: -10px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid white;
+        }
+        
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h5 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 4rem 0;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 1rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-col h4:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background: var(--accent);
+            bottom: -8px;
+            left: 0;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .footer-col .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-col .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #adb5bd;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            
+            .search-bar input {
+                padding: 0.8rem 1rem;
+            }
+            
+            .search-bar button {
+                padding: 0.8rem;
+                border-radius: 0 0 10px 10px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-user-md"></i>
+                <div class="logo-text">
+                    <h1>OccupMed</h1>
+                    <p>Expertise Portal</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Experts</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">Research</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline">Login</button>
+                <button class="btn btn-primary">Register</button>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h2>Connecting Industry with Occupational Medicine Expertise</h2>
+            <p>Find certified specialists, access resources, and improve workplace health standards with our comprehensive portal.</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for specialists, conditions, or resources...">
+                <button><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h3>Our Services</h3>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase-medical"></i>
+                    </div>
+                    <h4>Expert Consultation</h4>
+                    <p>Connect with board-certified occupational medicine physicians for workplace health assessments and recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Workplace Analytics</h4>
+                    <p>Comprehensive data analysis of workplace health metrics to identify trends and improvement areas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h4>Education Resources</h4>
+                    <p>Access to training materials, guidelines, and best practices in occupational health and safety.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h4>Health Surveillance</h4>
+                    <p>Customized programs for monitoring employee health in relation to workplace hazards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h4>Compliance Support</h4>
+                    <p>Guidance in meeting regulatory requirements and maintaining workplace health standards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Workforce Wellness</h4>
+                    <p>Programs designed to promote employee wellbeing and prevent work-related illnesses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="experts">
+        <div class="container">
+            <div class="section-title">
+                <h3>Featured Experts</h3>
+            </div>
+            <div class="experts-grid">
+                <div class="expert-card">
+                    <div class="expert-img">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Dr. Sarah Johnson">
+                    </div>
+                    <div class="expert-info">
+                        <h4>Dr. Sarah Johnson</h4>
+                        <span class="expert-specialty">Industrial Toxicology</span>
+                        <div class="expert-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(47)</span>
+                        </div>
+                        <a href="#" class="expert-btn">View Profile</a>
+                    </div>
+                </div>
+                <div class="expert-card">
+                    <div class="expert-img">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Michael Chen">
+                    </div>
+                    <div class="expert-info">
+                        <h4>Dr. Michael Chen</h4>
+                        <span class="expert-specialty">Ergonomics</span>
+                        <div class="expert-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(63)</span>
+                        </div>
+                        <a href="#" class="expert-btn">View Profile</a>
+                    </div>
+                </div>
+                <div class="expert-card">
+                    <div class="expert-img">
+                        <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Dr. Emily Rodriguez">
+                    </div>
+                    <div class="expert-info">
+                        <h4>Dr. Emily Rodriguez</h4>
+                        <span class="expert-specialty">Occupational Psychology</span>
+                        <div class="expert-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>(38)</span>
+                        </div>
+                        <a href="#" class="expert-btn">View Profile</a>
+                    </div>
+                </div>
+                <div class="expert-card">
+                    <div class="expert-img">
+                        <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Dr. James Wilson">
+                    </div>
+                    <div class="expert-info">
+                        <h4>Dr. James Wilson</h4>
+                        <span class="expert-specialty">Workplace Rehabilitation</span>
+                        <div class="expert-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(52)</span>
+                        </div>
+                        <a href="#" class="expert-btn">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="resources">
+        <div class="container">
+            <div class="section-title">
+                <h3>Professional Resources</h3>
+            </div>
+            <div class="resources-tabs">
+                <button class="tab-btn active" data-tab="guidelines">Guidelines</button>
+                <button class="tab-btn" data-tab="research">Research Papers</button>
+                <button class="tab-btn" data-tab="tools">Assessment Tools</button>
+                <button class="tab-btn" data-tab="training">Training Modules</button>
+            </div>
+            
+            <div id="guidelines" class="tab-content active">
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Workplace Health Guidelines">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Guideline</span>
+                            <h4>2023 Workplace Exposure Limits</h4>
+                            <p>Comprehensive guide to chemical and physical agent exposure limits for occupational settings.</p>
+                            <a href="#" class="resource-link">Download PDF <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ergonomic Standards">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Guideline</span>
+                            <h4>Ergonomic Workplace Standards</h4>
+                            <p>Updated ergonomic assessment and workstation design recommendations for various industries.</p>
+                            <a href="#" class="resource-link">Download PDF <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25daf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Return to Work">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Guideline</span>
+                            <h4>Return-to-Work Best Practices</h4>
+                            <p>Evidence-based framework for developing effective return-to-work programs after injury or illness.</p>
+                            <a href="#" class="resource-link">Download PDF <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="research" class="tab-content">
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581092335397-9a5d2c0ecc9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Occupational Health Research">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Research</span>
+                            <h4>Impact of Shift Work on Health</h4>
+                            <p>Longitudinal study examining health outcomes among rotating shift workers in manufacturing.</p>
+                            <a href="#" class="resource-link">View Study <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581093057305-2431a3cc3358?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Occupational Medicine Research">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Research</span>
+                            <h4>Nanoparticle Exposure in Tech</h4>
+                            <p>Emerging risks from nanoparticle exposure in semiconductor fabrication facilities.</p>
+                            <a href="#" class="resource-link">View Study <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581092918056-0c4c3f8eb6e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Workplace Health Research">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Research</span>
+                            <h4>Mental Health in Hybrid Work</h4>
+                            <p>Evaluation of mental health outcomes in employees transitioning to hybrid work models.</p>
+                            <a href="#" class="resource-link">View Study <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tools" class="tab-content">
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581092335473-0663a4dc24b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Risk Assessment Tool">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Tool</span>
+                            <h4>Chemical Exposure Calculator</h4>
+                            <p>Interactive tool for estimating workplace chemical exposures based on process parameters.</p>
+                            <a href="#" class="resource-link">Access Tool <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581093057157-9bf8b0e0e182?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ergonomic Assessment Tool">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Tool</span>
+                            <h4>Ergonomic Risk Evaluator</h4>
+                            <p>Comprehensive ergonomic assessment tool with industry-specific risk scoring systems.</p>
+                            <a href="#" class="resource-link">Access Tool <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581092335520-c16ca6954346?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Noise Assessment Tool">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Tool</span>
+                            <h4>Noise Exposure Predictor</h4>
+                            <p>Model for predicting employee noise exposure based on equipment characteristics and work patterns.</p>
+                            <a href="#" class="resource-link">Access Tool <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="training" class="tab-content">
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581094794325-0e518f7c611a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Occupational Health Training">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Training</span>
+                            <h4>Hazard Communication</h4>
+                            <p>Comprehensive training program for effective hazard communication in the workplace.</p>
+                            <a href="#" class="resource-link">Start Course <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581093045495-50ab42b4b223?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Medical Surveillance Training">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Training</span>
+                            <h4>Medical Surveillance Programs</h4>
+                            <p>Step-by-step guide to developing and implementing effective medical surveillance programs.</p>
+                            <a href="#" class="resource-link">Start Course <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="https://images.unsplash.com/photo-1581093057246-f25880bc31ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Workplace Wellness Training">
+                        </div>
+                        <div class="resource-content">
+                            <span class="resource-category">Training</span>
+                            <h4>Workplace Wellness Certification</h4>
+                            <p>Complete certification program for developing comprehensive workplace wellness initiatives.</p>
+                            <a href="#" class="resource-link">Start Course <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h3>Success Stories</h3>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-slide active">
+                    <p class="testimonial-text">Connecting with specialists through this portal transformed our approach to occupational health. The expertise available helped us reduce workplace injuries by 42% in just one year.</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="John Peterson">
+                        </div>
+                        <div class="author-info">
+                            <h5>John Peterson</h5>
+                            <p>Safety Director, Manufacturing Corp</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <p class="testimonial-text">The research papers and assessment tools provided valuable insights that shaped our new ergonomics program. Employee complaints about musculoskeletal issues dropped by 65% after implementation.</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="Maria Gonzalez">
+                        </div>
+                        <div class="author-info">
+                            <h5>Maria Gonzalez</h5>
+                            <p>HR Manager, Tech Solutions Inc.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <p class="testimonial-text">As an occupational medicine physician, this portal has become my go-to resource for staying current with the latest guidelines and connecting with colleagues on challenging cases.</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/men/72.jpg" alt="Dr. Robert Kim">
+                        </div>
+                        <div class="author-info">
+                            <h5>Dr. Robert Kim</h5>
+                            <p>Occupational Medicine Specialist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <div class="slider-dot active" data-slide="0"></div>
+                    <div class="slider-dot" data-slide="1"></div>
+                    <div class="slider-dot" data-slide="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta">
+        <div class="container">
+            <h3>Ready to Enhance Your Workplace Health Program?</h3>
+            <p>Join hundreds of organizations that have improved employee wellbeing and reduced occupational health risks with our expert network and resources.</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" style="padding: 1rem 2rem;">Get Started Today</button>
+                <button class="btn btn-outline" style="padding: 1rem 2rem; border-color: white; color: white;">Request Demo</button>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-user-md"></i>
+                        <div class="logo-text">
+                            <h1>OccupMed</h1>
+                            <p>Expertise Portal</p>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem; color: #adb5bd;">Connecting industry with occupational medicine expertise to create healthier workplaces worldwide.</p>
+                    <div class="social-links" style="margin-top: 1rem;">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Experts Directory</a></li>
+                        <li><a href="#">Resource Center</a></li>
+                        <li><a href="#">Research Hub</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Expert Consultation</a></li>
+                        <li><a href="#">Program Assessments</a></li>
+                        <li><a href="#">Compliance Audits</a></li>
+                        <li><a href="#">Training Programs</a></li>
+                        <li><a href="#">Workplace Analytics</a></li>
+                        <li><a href="#">Health Surveillance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Health Way, Suite 400</li>
+                        <li>Boston, MA 02108</li>
+                        <li><i class="fas fa-phone"></i> (617) 555-1234</li>
+                        <li><i class="fas fa-envelope"></i> info@occupmedportal.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 9am-5pm EST</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Occupational Medicine Expertise Portal. All rights reserved. | <a href="#" style="color: #adb5bd;">Privacy Policy</a> | <a href="#" style="color: #adb5bd;">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Testimonial slider functionality
+        const testimonials = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        let currentSlide = 0;
+        
+        function showSlide(n) {
+            testimonials.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            currentSlide = (n + testimonials.length) % testimonials.length;
+            testimonials[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Auto-rotate testimonials
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+        
+        // Search functionality
+        const searchBtn = document.querySelector('.search-bar button');
+        searchBtn.addEventListener('click', () => {
+            const searchTerm = document.querySelector('.search-bar input').value;
+            if(searchTerm.trim() !== '') {
+                alert(`Searching for: ${searchTerm}`);
+                // In a real application, this would trigger a search API call
+            }
+        });
+    </script>
+</body>
+</html>

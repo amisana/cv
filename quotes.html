@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Medical Quotes - Cameron Kiani, MD</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            background-color: #fff;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0 20px;
+            border-bottom: 2px solid #000;
+            flex-wrap: wrap;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .header:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s ease;
+        }
+
+        .header-left:hover {
+            transform: translateY(-2px);
+        }
+
+        .header-right {
+            position: relative;
+            padding: 6px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .header-right:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .header a {
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            color: #000;
+        }
+
+        .header a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -1px;
+            left: 0;
+            background-color: #000;
+            transition: width 0.3s ease;
+        }
+
+        .header a:hover:after {
+            width: 100%;
+        }
+
+        .header-icon {
+            margin-right: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .header a:hover .header-icon {
+            transform: translateY(-2px);
+        }
+
+        /* Quote display */
+        .quote-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .author {
+            font-size: 1.1rem;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+            transition-delay: 0.3s;
+        }
+
+        .quote.visible, .author.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quote-actions {
+            margin-top: 60px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .quote-button {
+            padding: 12px 24px;
+            background-color: #fff;
+            border: 1px solid #000;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: "Times New Roman", Times, serif;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-button:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quote-button:active {
+            transform: translateY(0);
+        }
+        
+        .quote-button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .quote-button:hover::after {
+            left: 100%;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 767px) {
+            .quote {
+                font-size: 1.2rem;
+            }
+
+            .author {
+                font-size: 1rem;
+            }
+
+            .quote-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .header-right {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <span class="name">Cameron Kiani, MD</span> | <a href="mailto:cameron@kianimd.com"><i class="fas fa-envelope header-icon"></i>cameron@kianimd.com</a>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-globe header-icon"></i> <a href="index.html">Return to CV</a>
+            </div>
+        </div>
+
+        <div class="quote-container">
+            <div class="quote" id="quoteText"></div>
+            <div class="author" id="quoteAuthor"></div>
+
+            <div class="quote-actions">
+                <button class="quote-button" onclick="showRandomQuote()">
+                    <i class="fas fa-random"></i> New Quote
+                </button>
+                <button class="quote-button" onclick="window.location.href='index.html'">
+                    <i class="fas fa-file-alt"></i> Return to CV
+                </button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Collection of inspirational quotes on medicine and healthcare.</p>
+            <p>© <a href="https://OCCMED.AI">Cameron Kiani, MD</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Quote database
+        const quotes = [
+            {
+                text: "One of the essential qualities of the clinician is interest in humanity, for the secret of the care of the patient is in caring for the patient.",
+                author: "Dr. Francis Weld Peabody"
+            },
+            {
+                text: "The secret of the care of the patient is in caring for the patient.",
+                author: "Dr. Francis Weld Peabody"
+            },
+            {
+                text: "People do not care how much you know until they know how much you care.",
+                author: "John C. Maxwell"
+            },
+            {
+                text: "It is far more important to know what person the disease has than what disease the person has.",
+                author: "Hippocrates"
+            },
+            {
+                text: "Listen to your patient; he is telling you the diagnosis.",
+                author: "William Osler"
+            },
+            {
+                text: "The practice of medicine is an art, not a trade; a calling, not a business; a calling in which your heart will be exercised equally with your head.",
+                author: "William Osler"
+            },
+            {
+                text: "Wherever the art of medicine is loved, there is also a love of humanity.",
+                author: "Hippocrates"
+            },
+            {
+                text: "To cure sometimes, to relieve often, to comfort always.",
+                author: "Unknown"
+            },
+            {
+                text: "Healing is a matter of time, but it is sometimes also a matter of opportunity.",
+                author: "Hippocrates"
+            },
+            {
+                text: "The physician has an art, a science, and a business.",
+                author: "William Osler"
+            },
+            {
+                text: "Statistics are human beings with the tears wiped off.",
+                author: "Paul Brodeur"
+            },
+            {
+                text: "The doctor of the future will give no medicine, but will interest his patients in the care of the human frame, in diet and in the cause and prevention of disease.",
+                author: "Thomas Edison"
+            },
+            {
+                text: "I chose medicine, not because I was scientifically-minded, for I was deeply ignorant of science. I chose it because as a doctor I could go anywhere I pleased — to far-off lands or to city slums — and be quite sure I could be of use anywhere.",
+                author: "Alice Hamilton"
+            },
+            {
+                text: "Life in a settlement does several things to you. Among others, it teaches you that education and culture have little to do with real wisdom, the wisdom that comes from life experiences.",
+                author: "Alice Hamilton"
+            }
+        ];
+
+        // Track used quotes to prevent immediate repeats
+        let recentlyUsedQuotes = [];
+        const maxRecentQuotes = Math.min(5, Math.floor(quotes.length / 2));
+
+        // Show a random quote with animation
+        function showRandomQuote() {
+            // Hide current quote
+            document.getElementById('quoteText').classList.remove('visible');
+            document.getElementById('quoteAuthor').classList.remove('visible');
+            
+            setTimeout(() => {
+                // Get available quotes (not recently used)
+                let availableQuotes = quotes.filter(quote => 
+                    !recentlyUsedQuotes.some(recentQuote => 
+                        recentQuote.text === quote.text && recentQuote.author === quote.author
+                    )
+                );
+                
+                // If we've used all quotes, reset the tracker
+                if (availableQuotes.length === 0) {
+                    recentlyUsedQuotes = [];
+                    availableQuotes = quotes;
+                }
+                
+                // Select a random quote
+                const randomIndex = Math.floor(Math.random() * availableQuotes.length);
+                const selectedQuote = availableQuotes[randomIndex];
+                
+                // Track this quote to prevent repeats
+                recentlyUsedQuotes.push(selectedQuote);
+                if (recentlyUsedQuotes.length > maxRecentQuotes) {
+                    recentlyUsedQuotes.shift(); // Remove oldest quote
+                }
+                
+                // Update the quote display
+                document.getElementById('quoteText').textContent = selectedQuote.text;
+                document.getElementById('quoteAuthor').textContent = "— " + selectedQuote.author;
+                
+                // Show with animation
+                setTimeout(() => {
+                    document.getElementById('quoteText').classList.add('visible');
+                    document.getElementById('quoteAuthor').classList.add('visible');
+                }, 100);
+            }, 500); // Wait for fade out before changing quote
+        }
+
+        // Initialize with a random quote when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            showRandomQuote();
+            
+            // Add keyboard navigation - space bar or right arrow for new quote
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' || e.code === 'ArrowRight') {
+                    showRandomQuote();
+                    e.preventDefault(); // Prevent page scroll
+                } else if (e.code === 'Escape') {
+                    window.location.href = 'index.html'; // Return to CV
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
