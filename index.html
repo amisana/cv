@@ -3,9 +3,6 @@
     <title>Cameron Kiani, MD - Curriculum Vitae</title>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- PDF Generation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- External CSS -->
     <style>
         /* Base container styles */
@@ -295,6 +292,12 @@
             margin-bottom: 3px;
         }
 
+        /* New class for research items that shouldn't be bold */
+        .projects-section .research-item {
+            font-weight: normal;
+            margin-bottom: 3px;
+        }
+
         .projects-section .project-details {
             margin-top: 3px;
             padding-left: 20px;
@@ -363,73 +366,20 @@
 
         /* PDF button */
         .pdf-export {
-            display: block;
-            margin: 30px auto;
-            padding: 10px 20px;
-            background-color: #fff;
-            color: #000;
-            border: 1px solid #000;
-            cursor: pointer;
-            font-size: 1rem;
-            font-family: "Times New Roman", Times, serif;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pdf-export:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .pdf-export:active {
-            transform: translateY(0);
-        }
-        
-        .pdf-export::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: -100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .pdf-export:hover::after {
-            left: 100%;
+            display: none;
         }
         
         /* PDF generation loading indicator */
         .pdf-loading {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
         }
         
         .pdf-loading-spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #000;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+            display: none;
         }
         
         .pdf-loading-text {
-            font-size: 1.2rem;
-            font-family: "Times New Roman", Times, serif;
+            display: none;
         }
         
         @keyframes spin {
@@ -1247,6 +1197,11 @@
         .hidden-rotation {
             display: none;
         }
+
+        /* Hide Technology Stack and Digital Portfolio sections */
+        .tech-section, .portfolio-section {
+            display: none;
+        }
     </style>
     <!-- Intersection Observer for scroll animations -->
     <script>
@@ -1885,254 +1840,26 @@
                     </div>
                 </div>
 
-        <div class="section portfolio-section">
-            <div class="section-title">Digital Portfolio</div>
-            
-            <div class="portfolio-category">AI & TECHNOLOGY PLATFORMS</div>
-            <table class="platform-table">
-                <tr>
-                    <td>
-                        <a href="https://OCCMED.AI">OCCMED.AI</a>
-                        <span class="platform-chip platform-primary">Primary</span>
-                    </td>
-                    <td>Primary professional practice portal</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="https://SAFETYSENTINEL.APP">SAFETYSENTINEL.APP</a>
-                        <span class="platform-chip platform-safety">Safety</span>
-                    </td>
-                    <td>AI-powered occupational safety analysis platform</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="https://JEVONSPARADOX.AI">JEVONSPARADOX.AI</a>
-                        <span class="platform-chip platform-infra">Infra</span>
-                    </td>
-                    <td>Data center infrastructure & occupational analysis</td>
-                </tr>
-                <tr id="platform-toggle-row">
-                    <td colspan="2" style="text-align: center; padding: 10px;">
-                        <button id="platform-toggle-btn" style="background: none; border: 1px solid #ddd; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
-                            <i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Show More Platforms
-                        </button>
-                    </td>
-                </tr>
-                <tr class="hidden-platform">
-                    <td>
-                        <a href="https://AMISANA.AI">AMISANA.AI</a>
-                        <span class="platform-chip platform-enterprise">Enterprise</span>
-                    </td>
-                    <td>AI solutions & enterprise implementation</td>
-                </tr>
-                <tr class="hidden-platform">
-                    <td>
-                        <a href="https://DATA_INDEX.AI">DATA_INDEX.AI</a>
-                        <span class="platform-chip platform-analytics">Analytics</span>
-                    </td>
-                    <td>Analytics & metrics platform</td>
-                </tr>
-                <tr class="hidden-platform">
-                    <td>
-                        <a href="https://TERMINAL.AI">TERMINAL.AI</a>
-                        <span class="platform-chip platform-tech">Tech</span>
-                    </td>
-                    <td>Technical interface system</td>
-                </tr>
-                <tr class="hidden-platform">
-                    <td>
-                        <a href="https://THIP.AI">THIP.AI</a>
-                        <span class="platform-chip platform-project">Project</span>
-                    </td>
-                    <td>Human Instrumentality Project</td>
-                </tr>
-                <tr class="hidden-platform">
-                    <td>
-                        <a href="https://FALLSUMMIT.CARD.CO">FALLSUMMIT.CARD.CO</a>
-                        <span class="platform-chip platform-resource">Resource</span>
-                    </td>
-                    <td>ACOEM AI Resources & Guidance</td>
-                </tr>
-                <tr class="hidden-platform">
-                    <td>
-                        <a href="https://KIANIMD.COM">KIANIMD.COM</a>
-                        <span class="platform-chip platform-personal">Personal</span>
-                    </td>
-                    <td>Professional link aggregator</td>
-                </tr>
-                <tr class="hidden-platform">
-                    <td>
-                        <a href="https://LINKEDIN.COM/IN/KIANIMD">LINKEDIN.COM/IN/KIANIMD</a>
-                        <span class="platform-chip platform-social">Social</span>
-                    </td>
-                    <td>Professional updates & insights</td>
-                </tr>
-            </table>
 
-    <div class="portfolio-category">FEATURED PROJECTS</div>
+    <h3 class="portfolio-section-heading">FEATURED PROJECTS</h3>
     
-    <!-- Add CSS for hidden platforms -->
-    <style>
-        .hidden-platform {
-            display: none;
-        }
-    </style>
-    
-    <!-- Add JavaScript for toggle functionality -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleBtn = document.getElementById('platform-toggle-btn');
-            const hiddenPlatforms = document.querySelectorAll('.hidden-platform');
-            let expanded = false;
-            
-            toggleBtn.addEventListener('click', function() {
-                if (expanded) {
-                    // Hide platforms
-                    hiddenPlatforms.forEach(platform => {
-                        platform.style.display = 'none';
-                    });
-                    toggleBtn.innerHTML = '<i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Show More Platforms';
-                } else {
-                    // Show platforms
-                    hiddenPlatforms.forEach(platform => {
-                        platform.style.display = 'table-row';
-                    });
-                    toggleBtn.innerHTML = '<i class="fas fa-minus-circle" style="margin-right: 5px;"></i> Show Less';
-                }
-                expanded = !expanded;
-            });
-        });
-    </script>
-            
-    <style>
-        /* Add these new styles for featured projects */
-        .featured-project {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 12px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .featured-project:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .featured-project::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background-color: #a5d8c7; /* Light teal color like platform-primary */
-        }
-        
-        .featured-project-title {
-            font-weight: bold;
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-            padding-bottom: 4px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .featured-project-title-text {
-            display: flex;
-            align-items: center;
-        }
-        
-        .featured-project-link {
-            font-size: 0.8rem;
-            font-weight: normal;
-            background-color: #f8f8f8;
-            padding: 2px 6px;
-            border-radius: 3px;
-            transition: all 0.2s ease;
-        }
-        
-        .featured-project-link:hover {
-            background-color: #eee;
-        }
-        
-        .featured-project-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 6px;
-            font-size: 0.75rem;
-        }
-        
-        .featured-project-tag {
-            background-color: #f0f0f0;
-            padding: 1px 6px;
-            border-radius: 3px;
-            color: #666;
-            display: inline-flex;
-            align-items: center;
-        }
-        
-        .featured-project-details {
-            margin-top: 6px;
-        }
-        
-        .featured-project-details ul {
-            margin: 0;
-            padding-left: 18px;
-        }
-        
-        .featured-project-details li {
-            margin-bottom: 3px;
-            line-height: 1.3;
-            font-size: 0.9rem;
-        }
-        
-        .featured-project-icon {
-            margin-right: 5px;
-            color: #666;
-            font-size: 0.9em;
-        }
-        
-        .featured-projects-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        @media (max-width: 767px) {
-            .featured-projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-            
-    <div class="featured-projects-grid">
-        <div class="featured-project">
-            <div class="featured-project-title">
-                <div class="featured-project-title-text">
-                    <i class="fas fa-chart-line featured-project-icon"></i>
-                    The $DATA Index/Fund
+    <div class="professional-grid">
+        <div class="professional-card">
+            <div class="professional-card-left">
+                <div class="professional-company">The $DATA Index/Fund</div>
+                <div class="professional-position">Financial Index</div>
+                <div class="professional-period">2023</div>
+                <div style="margin-top: 10px;">
+                    <a href="https://dataindex.glide.page/dl/17171d" target="_blank" style="color: #3269a8;">
+                        thedataindex.ai <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
+                    </a>
                 </div>
-                <a href="https://dataindex.glide.page/dl/17171d" target="_blank" class="featured-project-link">
-                    thedataindex.ai <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
-                </a>
             </div>
-            <div class="featured-project-meta">
-                <span class="featured-project-tag"><i class="fas fa-tag featured-project-icon"></i> Financial Index</span>
-                <span class="featured-project-tag"><i class="fas fa-server featured-project-icon"></i> Data Infrastructure</span>
-                <span class="featured-project-tag"><i class="fas fa-calendar-alt featured-project-icon"></i> 2023</span>
-            </div>
-            <div class="featured-project-details">
-                <ul>
-                    <li>Comprehensive index tracking physical infrastructure of the digital economy</li>
+            <div class="professional-card-right">
+                <div class="professional-description">
+                    Comprehensive index tracking physical infrastructure of the digital economy
+                </div>
+                <ul class="professional-list">
                     <li>Spans semiconductor fabrication to data center cooling systems</li>
                     <li>Analysis of thermal management technologies and specialized materials</li>
                     <li>Used by infrastructure investors, IB firms, and fund managers</li>
@@ -2140,25 +1867,22 @@
             </div>
         </div>
         
-        <div class="featured-project">
-            <div class="featured-project-title">
-                <div class="featured-project-title-text">
-                    <i class="fas fa-film featured-project-icon"></i>
-                    The Human Instrumentality Project
+        <div class="professional-card">
+            <div class="professional-card-left">
+                <div class="professional-company">The Human Instrumentality Project</div>
+                <div class="professional-position">AI-Generated Film</div>
+                <div class="professional-period">2024</div>
+                <div style="margin-top: 10px;">
+                    <a href="https://thip.ai" target="_blank" style="color: #3269a8;">
+                        thip.ai <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
+                    </a>
                 </div>
-                <a href="https://thip.ai" target="_blank" class="featured-project-link">
-                    thip.ai <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
-                </a>
             </div>
-            <div class="featured-project-meta">
-                <span class="featured-project-tag"><i class="fas fa-video featured-project-icon"></i> Film</span>
-                <span class="featured-project-tag"><i class="fas fa-leaf featured-project-icon"></i> Sustainability</span>
-                <span class="featured-project-tag"><i class="fas fa-robot featured-project-icon"></i> AI-Generated</span>
-                <span class="featured-project-tag"><i class="fas fa-calendar-alt featured-project-icon"></i> 2024</span>
-            </div>
-            <div class="featured-project-details">
-                <ul>
-                    <li>Thought-provoking narrative exploring AI, sustainability, and environmental impact</li>
+            <div class="professional-card-right">
+                <div class="professional-description">
+                    Thought-provoking narrative exploring AI, sustainability, and environmental impact
+                </div>
+                <ul class="professional-list">
                     <li>Created using multiple AI tools: GPT-4, Claude, Midjourney, RunwayML</li>
                     <li>Voice generation with ElevenLabs, video with SORA</li>
                     <li>Explores ecological impacts of data center infrastructure growth</li>
@@ -2166,126 +1890,155 @@
             </div>
         </div>
         
-        <div class="featured-project">
-            <div class="featured-project-title">
-                <div class="featured-project-title-text">
-                    <i class="fas fa-shield-alt featured-project-icon"></i>
-                    Safety Sentinel
+        <div class="professional-card">
+            <div class="professional-card-left">
+                <div class="professional-company">Safety Sentinel</div>
+                <div class="professional-position">Computer Vision & OSHA Compliance</div>
+                <div class="professional-period">2024</div>
+                <div style="margin-top: 10px;">
+                    <a href="https://chatgpt.com/g/g-bnGCWzlLj-safety-sentinel" target="_blank" style="color: #3269a8;">
+                        safetysentinel.app <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
+                    </a>
                 </div>
-                <a href="https://chatgpt.com/g/g-bnGCWzlLj-safety-sentinel" target="_blank" class="featured-project-link">
-                    safetysentinel.app <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i>
-                </a>
             </div>
-            <div class="featured-project-meta">
-                <span class="featured-project-tag"><i class="fas fa-hard-hat featured-project-icon"></i> Safety</span>
-                <span class="featured-project-tag"><i class="fas fa-eye featured-project-icon"></i> Computer Vision</span>
-                <span class="featured-project-tag"><i class="fas fa-clipboard-check featured-project-icon"></i> OSHA</span>
-                <span class="featured-project-tag"><i class="fas fa-calendar-alt featured-project-icon"></i> 2024</span>
-            </div>
-            <div class="featured-project-details">
-                <ul>
-                    <li>GPT-Vision powered safety analysis system for workplace hazard detection</li>
+            <div class="professional-card-right">
+                <div class="professional-description">
+                    GPT-Vision powered safety analysis system for workplace hazard detection
+                </div>
+                <ul class="professional-list">
                     <li>Real-time regulatory guidance integration from OSHA and industry standards</li>
                     <li>Automated hazard assessment with severity/probability ranking</li>
                     <li>Used in manufacturing, construction, and healthcare settings</li>
                 </ul>
             </div>
         </div>
+        
+        <div class="professional-card">
+            <div class="professional-card-left">
+                <div class="professional-company">Lunar Veins</div>
+                <div class="professional-position">AI-Generated Medical Drama</div>
+                <div class="professional-period">2024</div>
+                <div style="margin-top: 10px;">
+                    <a href="https://youtu.be/Aj8vigoWIOk?si=f4eNBka27-Z5DYmd" target="_blank" style="color: #3269a8;">
+                        Watch on YouTube <i class="fab fa-youtube" style="font-size: 0.8em;"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="professional-card-right">
+                <div class="professional-description">
+                    Medical drama exploring healthcare ethics on the Moon and the human cost of progress
+                </div>
+                <ul class="professional-list">
+                    <li>Script development with Claude (Anthropic) for narrative refinement</li>
+                    <li>Character design with Midjourney, scenes with ChatGPT in Ghibli style</li>
+                    <li>Animation via Runway Gen4, voice acting with ElevenLabs</li>
+                    <li>Final post-production and editing with CapCut</li>
+                    <li>Created a haunting exploration of human dignity in an automated world</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
+
+<style>
+    /* Add portfolio section heading style for consistency */
+    .portfolio-section-heading {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin: 20px 0 15px 0;
+        color: #333;
+    }
+    
+    /* Clean up space above first heading in the section */
+    .portfolio-section .portfolio-section-heading:first-of-type {
+        margin-top: 15px;
+    }
+    
+    .hidden-platform {
+        display: none;
+    }
+</style>
 
 <div class="section projects-section">
     <div class="section-title">Selected Research and Presentations</div>
     
+    <!-- First few visible entries -->
     <div class="project">
-        <div class="project-title">Kiani, C. & Thompson, H. (2025). Occupational health surveillance in municipal wastewater workers: A clinical review and practical guidelines. [Manuscript completed]</div>
+        <div class="research-item"><strong>Kiani, C.</strong>, Tannis, C., Thompson, H., Meyer, J. (2025). Occupational health surveillance in municipal wastewater workers: A clinical review and practical guidelines. [Manuscript completed]</div>
     </div>
             
-            <div class="project">
-                <div class="project-title">Zadeh, A., Nosoudi, N., Halley, R., Kiani, C., & Ramirez-Vick, J. E. (2024). Predictive analytics for de novo malignancies after lung transplantation. Intelligent Decision Technologies. https://doi.org/10.1177/18724981241296492</div>
-            </div>
+    <div class="project">
+        <div class="research-item">Zadeh, A., Nosoudi, N., Halley, R., <strong>Kiani, C.</strong>, & Ramirez-Vick, J. E. (2024). Predictive analytics for de novo malignancies after lung transplantation. Intelligent Decision Technologies.</div>
+    </div>
             
-            <div class="project">
-                <div class="project-title">Kiani, C., & Berenji, M. (2024). Navigating the AI Wave: A Framework for Understanding Occupational Impact and Adaptation. Presented at the 2024 ACOEM Fall Summit, Virtual Webinar, November 7, 2024.</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">Kiani, C. (2024). ChatGPT Workshop for Health.nyc.gov Staff. Virtual Webinar, October 9, 2024.</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">Kiani, C., Luisi, D., Dumanovsky, T., Jaber, M., Bienenfeld, L., & Gonzales, N. (2024). Enhancing transportation safety through sleep apnea management: The Metropolitan Transportation Authority's OSA program. Poster. American Occupational Health Conference (AOHC), Orlando, FL May 19-22, 2024.</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">Holoyda, B., & Kiani, C. (2023). Establishing an Ethics for Psychedelic Psychiatry. Psychiatric Services, 74(8), 789. https://doi.org/10.1176/appi.ps.23074013</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">Kiani, C. (2020). Tranylcypromine: Its pharmacology, safety, and efficacy. The American Journal of Psychiatry Residents' Journal, 15(4), 3–5. https://doi.org/10.1176/appi.ajp-rj.2020.150402</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">Kiani, C., Otero, K., Taufique, S., & Ivanov, I. (2018). Chronic absenteeism: a brief review of causes, course and treatment. 8(3), 214–230. https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=FwS59QSG91wC:u-x6o8ySG0sC</div>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">Kim, K., Mann, S., Kiani, C. H., Otero, K., Taufique, S. R., & Ivanov, I. (2016). 5.37 clinical outcomes in school-avoidant adolescents receiving treatment in a day-hospital setting. Journal of the American Academy of Child and Adolescent Psychiatry, 55(10), S195. https://doi.org/10.1016/j.jaac.2016.09.295</div>
-            </div>
+    <div class="project">
+        <div class="research-item"><strong>Kiani, C.</strong>, & Berenji, M. (2024). Navigating the AI Wave: A Framework for Understanding Occupational Impact and Adaptation. Presented at the 2024 ACOEM Fall Summit, Virtual Webinar, November 7, 2024. <a href="https://www.loom.com/share/a9b90852d4134994bcab7b3851b6b9c1?sid=386c314a-3cf4-4945-94f2-1b74063bf10d" style="color: #3269a8;">[Watch Webinar Here]</a></div>
+    </div>
+    
+    <!-- Toggle button after visible entries -->
+    <div id="research-toggle-row" style="text-align: center; padding: 10px;">
+        <button id="research-toggle-btn" style="background: none; border: 1px solid #ddd; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+            <i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Show More Publications
+        </button>
+    </div>
+    
+    <!-- Hidden entries -->
+    <div class="hidden-research" style="display: none;">
+        <div class="project">
+            <div class="research-item"><strong>Kiani, C.</strong> (2024). ChatGPT Workshop for Health.nyc.gov Staff. Virtual Webinar, October 9, 2024.</div>
         </div>
-        
-        <div class="section projects-section">
-            <div class="section-title">Media & Presentations</div>
-            
-            <div class="project">
-                <div class="project-title">1. "Navigating the AI Wave" (Loom Presentation)</div>
-                <ul class="project-details">
-                    <li>Topic: AI's impact in occupational medicine</li>
-                    <li>Venue: ACOEM Fall Summit 2024</li>
-                    <li>URL: <a href="https://www.loom.com/a9b90852d4134994bcab7b3851b6b9c1">www.loom.com/a9b90852d4134994bcab7b3851b6b9c1</a></li>
-                </ul>
-            </div>
-            
-            <div class="project">
-                <div class="project-title">2. "The Human Instrumentality Project" (Wistia)</div>
-                <ul class="project-details">
-                    <li>Topic: Ecological & technological analysis</li>
-                    <li>Format: AI-generated exploration</li>
-                    <li>ID: fttztjgiqk</li>
-                </ul>
-            </div>
+                
+        <div class="project">
+            <div class="research-item"><strong>Kiani, C.</strong>, Luisi, D., Dumanovsky, T., Jaber, M., Bienenfeld, L., & Gonzales, N. (2024). Enhancing transportation safety through sleep apnea management: The Metropolitan Transportation Authority's OSA program. Poster. American Occupational Health Conference (AOHC), Orlando, FL May 19-22, 2024.</div>
         </div>
-        
-        <div class="section tech-section">
-            <div class="section-title">Technology Stack</div>
-            <div class="tech-grid">
-                <div class="tech-entry">
-                    <div class="tech-category">Language Models</div>
-                    <div class="tech-items">Claude, ChatGPT</div>
-                </div>
-                <div class="tech-entry">
-                    <div class="tech-category">Visual Generation</div>
-                    <div class="tech-items">RunwayML, SORA</div>
-                </div>
-                <div class="tech-entry">
-                    <div class="tech-category">Video Production</div>
-                    <div class="tech-items">Capcut</div>
-                </div>
-            </div>
+                
+        <div class="project">
+            <div class="research-item">Holoyda, B., & <strong>Kiani, C.</strong> (2023). Establishing an Ethics for Psychedelic Psychiatry. Psychiatric Services, 74(8), 789. https://doi.org/10.1176/appi.ps.23074013</div>
         </div>
+                
+        <div class="project">
+            <div class="research-item"><strong>Kiani, C.</strong> (2020). Tranylcypromine: Its pharmacology, safety, and efficacy. The American Journal of Psychiatry Residents' Journal, 15(4), 3–5. https://doi.org/10.1176/appi.ajp-rj.2020.150402</div>
+        </div>
+                
+        <div class="project">
+            <div class="research-item"><strong>Kiani, C.</strong>, Otero, K., Taufique, S., & Ivanov, I. (2018). Chronic absenteeism: a brief review of causes, course and treatment. 8(3), 214–230. https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=FwS59QSG91wC:u-x6o8ySG0sC</div>
+        </div>
+                
+        <div class="project">
+            <div class="research-item">Kim, K., Mann, S., <strong>Kiani, C. H.</strong>, Otero, K., Taufique, S. R., & Ivanov, I. (2016). 5.37 clinical outcomes in school-avoidant adolescents receiving treatment in a day-hospital setting. Journal of the American Academy of Child and Adolescent Psychiatry, 55(10), S195. https://doi.org/10.1016/j.jaac.2016.09.295</div>
+        </div>
+    </div>
+
+    <!-- Script for toggle functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('research-toggle-btn');
+            const hiddenResearch = document.querySelector('.hidden-research');
+            let expanded = false;
+            
+            toggleBtn.addEventListener('click', function() {
+                if (expanded) {
+                    // Hide research items
+                    hiddenResearch.style.display = 'none';
+                    toggleBtn.innerHTML = '<i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Show More Publications';
+                } else {
+                    // Show research items
+                    hiddenResearch.style.display = 'block';
+                    toggleBtn.innerHTML = '<i class="fas fa-minus-circle" style="margin-right: 5px;"></i> Show Less';
+                }
+                expanded = !expanded;
+            });
+        });
+    </script>
+</div>
+
         
         <div class="section professional-section">
-            <div class="section-title">Specialized Training</div>
-            <ul class="rotation-list">
-                <li class="rotation-entry">Medical Review Officer (MRO) | Certification Course Complete (Exam Fall 2025)</li>
-            </ul>
-        </div>
-        
-        <div class="section professional-section">
-            <div class="section-title">Professional Service & Development</div>
+            <div class="section-title">Professional Service, Recognition, & Development</div>
             <ul class="rotation-list">
                 <li class="rotation-entry">ACOEM Health Informatics Special Section | Resident Liaison | 2023 – Present</li>
                 <li class="rotation-entry">Psychiatric Services Journal Reviewer | Peer Reviewer | 2022 - Present</li>
+                <li class="rotation-entry">Medical Review Officer (MRO) Certification Course (ACOEM)</li>
             </ul>
         </div>
         
@@ -2296,16 +2049,7 @@
                 <li class="rotation-entry">ACHPD | Alliance for Continuing Education in the Healthcare Professional Development</li>
             </ul>
         </div>
-        
-        <div class="section professional-section">
-            <div class="section-title">Selected Awards, Recognition, and Continuing Education</div>
-            <ul class="rotation-list">
-                <li class="rotation-entry">AOHC 2024 Resident Scholarship (ACOEM)</li>
-                <li class="rotation-entry">Foreign Language and Area Studies Fellow (US DoE)</li>
-                <li class="rotation-entry">Medical Review Officer (MRO) Comprehensive Certification Course (ACOEM)/li>
-            </ul>
-        </div>
-        
+
         <div class="section professional-section">
             <div class="section-title">Languages</div>
             <ul class="rotation-list">
@@ -2315,23 +2059,82 @@
             </ul>
         </div>
 
-        <!-- PDF Export Button -->
-        <button class="pdf-export" onclick="generatePDF()">
-            <i class="fas fa-file-pdf"></i> Download as PDF
-        </button>
-        
-        <!-- PDF Loading Indicator -->
-        <div class="pdf-loading">
-            <div class="pdf-loading-spinner"></div>
-            <div class="pdf-loading-text">Generating PDF...</div>
+        <div class="section tech-section">
+            <div class="section-title">Technology Stack</div>
+            <div class="rotation-list">
+                <div class="tech-entry">
+                    <div class="tech-category">Language Models</div>
+                    <div class="tech-items">Claude, GPT</div>
+                </div>
+                <div class="tech-entry">
+                    <div class="tech-category">Audiovisual Generation</div>
+                    <div class="tech-items">Midjourney,RunwayML, SORA, Capcut, Screen Studio, Eleven Labs</div>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <!-- Mobile Navigation Toggle -->
-    <div class="mobile-nav-toggle" id="mobileNavToggle">
-        <i class="fas fa-bars"></i>
-    </div>
-    
+
+        <div class="section portfolio-section">
+            <div class="section-title">Digital Portfolio</div>
+            
+            <h3 class="portfolio-section-heading">AI & TECHNOLOGY PLATFORMS</h3>
+            <table class="platform-table">
+                <tr>
+                    <td>
+                        <a href="https://OCCMED.AI">OCCMED.AI</a>
+                    </td>
+                    <td>Primary professional practice portal</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://SAFETYSENTINEL.APP">SAFETYSENTINEL.APP</a>
+                    </td>
+                    <td>AI-powered occupational safety analysis platform</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://JEVONSPARADOX.AI">JEVONSPARADOX.AI</a>
+                    </td>
+                    <td>Data center infrastructure & occupational analysis</td>
+                </tr>
+                </tr>
+                    <td>
+                        <a href="https://AMISANA.AI">AMISANA.AI</a>
+                    </td>
+                    <td>AI solutions & enterprise implementation</td>
+                </tr>
+                    <td>
+                        <a href="https://DATA_INDEX.AI">DATA_INDEX.AI</a>
+                    </td>
+                    <td>Analytics & metrics platform</td>
+                </tr>
+                    <td>
+                        <a href="https://TERMINAL.AI">TERMINAL.AI</a>
+                    </td>
+                    <td>Technical interface system</td>
+                </tr>
+                    <td>
+                        <a href="https://THIP.AI">THIP.AI</a>
+                    </td>
+                    <td>Human Instrumentality Project</td>
+                </tr>
+                    <td>
+                        <a href="https://FALLSUMMIT.CARD.CO">FALLSUMMIT.CARD.CO</a>
+                    </td>
+                    <td>ACOEM AI Resources & Guidance</td>
+                </tr>
+                    <td>
+                        <a href="https://KIANIMD.COM">KIANIMD.COM</a>
+                    </td>
+                    <td>Professional link aggregator</td>
+                </tr>
+                    <td>
+                        <a href="https://LINKEDIN.COM/IN/KIANIMD">LINKEDIN.COM/IN/KIANIMD</a>
+                    </td>
+                    <td>Professional updates & insights</td>
+                </tr>
+            </table>
+
+        
     <!-- Quick Navigation Buttons -->
     <div class="quick-nav">
         <div class="quick-nav-button" onclick="scrollToTop()">
@@ -2354,150 +2157,6 @@
             <!-- Will be populated by JavaScript -->
         </div>
     </div>
-
-    <!-- JavaScript for PDF printing -->
-    <script>
-        // Old print function
-        function printAsPDF() {
-            // Remove animation classes before printing to ensure all content is visible
-            document.querySelectorAll('.animate-ready').forEach(el => {
-                el.classList.remove('animate-ready');
-                el.classList.add('animate-in');
-            });
-            
-            // Short delay to ensure styles are applied before print
-            setTimeout(() => {
-                window.print();
-            }, 100);
-        }
-        
-        // New PDF generation function
-        function generatePDF() {
-            // Show loading indicator
-            const loadingIndicator = document.querySelector('.pdf-loading');
-            loadingIndicator.style.display = 'flex';
-            
-            // Make sure all animations are complete
-            document.querySelectorAll('.animate-ready').forEach(el => {
-                el.classList.remove('animate-ready');
-                el.classList.add('animate-in');
-            });
-            
-            // Hide the PDF button during capture
-            const pdfButton = document.querySelector('.pdf-export');
-            const loadingElement = document.querySelector('.pdf-loading');
-            pdfButton.style.display = 'none';
-            
-            // Hide mobile navigation elements during capture
-            const mobileNavToggle = document.getElementById('mobileNavToggle');
-            const quickNav = document.querySelector('.quick-nav');
-            const progressIndicator = document.querySelector('.progress-indicator');
-            
-            if (mobileNavToggle) mobileNavToggle.style.display = 'none';
-            if (quickNav) quickNav.style.display = 'none';
-            if (progressIndicator) progressIndicator.style.display = 'none';
-            
-            // Short delay to ensure styles are applied
-            setTimeout(() => {
-                const { jsPDF } = window.jspdf;
-                const container = document.querySelector('.container');
-                
-                // Create PDF with standard dimensions (A4)
-                const pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: 'a4'
-                });
-                
-                // Get all sections to process them individually for better quality
-                const sections = Array.from(document.querySelectorAll('.section, .header, .about-me, .pdf-export'));
-                
-                // Function to process sections sequentially
-                const processSections = async (index = 0, currentPage = 1) => {
-                    if (index >= sections.length) {
-                        // All sections processed, save the PDF
-                        pdf.save('Cameron_Kiani_CV.pdf');
-                        
-                        // Restore UI elements
-                        pdfButton.style.display = 'block';
-                        if (mobileNavToggle) mobileNavToggle.style.display = 'block';
-                        if (quickNav) quickNav.style.display = 'block';
-                        if (progressIndicator) progressIndicator.style.display = 'block';
-                        loadingIndicator.style.display = 'none';
-                        
-                        return;
-                    }
-                    
-                    // Update loading text
-                    document.querySelector('.pdf-loading-text').textContent = 
-                        `Generating PDF... (${index + 1}/${sections.length})`;
-                    
-                    const section = sections[index];
-                    
-                    try {
-                        // Capture the section
-                        const canvas = await html2canvas(section, {
-                            scale: 3, // Higher scale for better quality
-                            useCORS: true,
-                            logging: false,
-                            allowTaint: true,
-                            backgroundColor: '#ffffff'
-                        });
-                        
-                        // Convert to image
-                        const imgData = canvas.toDataURL('image/jpeg', 1.0);
-                        
-                        // Get PDF dimensions
-                        const pdfWidth = pdf.internal.pageSize.getWidth();
-                        const pdfHeight = pdf.internal.pageSize.getHeight();
-                        
-                        // Calculate image dimensions to fit in PDF
-                        const imgWidth = canvas.width;
-                        const imgHeight = canvas.height;
-                        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / 3); // Limit height to 1/3 of page
-                        const scaledWidth = imgWidth * ratio;
-                        const scaledHeight = imgHeight * ratio;
-                        
-                        // Check if we need a new page
-                        if (index > 0) {
-                            // Calculate current Y position
-                            const yPosition = (currentPage - 1) * pdfHeight + scaledHeight;
-                            
-                            // If this section would go beyond page, add a new page
-                            if (yPosition > currentPage * pdfHeight - 10) { // 10mm margin
-                                pdf.addPage();
-                                currentPage++;
-                            }
-                        }
-                        
-                        // Calculate position (centered horizontally, sequential vertically)
-                        const xPosition = (pdfWidth - scaledWidth) / 2;
-                        const yPosition = (index === 0) ? 10 : // First item (header) at top with margin
-                                         ((currentPage - 1) * pdfHeight + 
-                                          ((index === 1) ? 30 : scaledHeight)); // Position based on previous content
-                        
-                        // Add image to PDF
-                        pdf.addImage(imgData, 'JPEG', xPosition, yPosition, scaledWidth, scaledHeight);
-                        
-                        // Process next section
-                        setTimeout(() => {
-                            processSections(index + 1, currentPage);
-                        }, 100); // Small delay to prevent browser from freezing
-                        
-                    } catch (error) {
-                        console.error('Error processing section:', error);
-                        
-                        // Continue with next section despite error
-                        processSections(index + 1, currentPage);
-                    }
-                };
-                
-                // Start processing sections
-                processSections();
-                
-            }, 500);
-        }
-    </script>
     
     <!-- Navigation and Scrolling JavaScript -->
     <script>
@@ -2724,4 +2383,6 @@
         });
     </script>
 </body>
+</html>
+</html>
 </html>
