@@ -1202,6 +1202,104 @@
         .tech-section, .portfolio-section {
             display: none;
         }
+
+        /* Announcement styling */
+        .announcement {
+            margin: 20px 0;
+            border: 1px solid #d4d4d4;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .announcement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: #f1f7fd;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .announcement-header:hover {
+            background-color: #e4f0fb;
+        }
+
+        .announcement-title {
+            font-weight: bold;
+            color: #3269a8;
+            font-size: 1.1rem;
+        }
+
+        .announcement-icon i {
+            transition: transform 0.3s ease;
+            color: #3269a8;
+        }
+
+        .announcement-icon.active i {
+            transform: rotate(180deg);
+        }
+
+        .announcement-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .announcement-content.active {
+            padding: 15px;
+            max-height: 2000px;
+            border-top: 1px solid #d4d4d4;
+        }
+
+        .testimonial {
+            margin: 10px 0 5px;
+            padding: 10px 15px;
+            border-left: 3px solid #3269a8;
+            font-style: italic;
+            color: #555;
+            background-color: #f3f3f3;
+            line-height: 1.5;
+        }
+
+        /* Award image styling */
+        .award-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .award-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .award-image:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 767px) {
+            .announcement-title {
+                font-size: 1rem;
+            }
+            
+            .testimonial {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+        }
     </style>
     <!-- Intersection Observer for scroll animations -->
     <script>
@@ -1538,6 +1636,20 @@
             <span style="display: block; margin-top: 8px;">
                 <a href="https://occmed.ai" style="color: #3269a8; font-weight: bold;">Mobile users: Visit OCCMED.AI (click here)</a>
             </span>
+        </div>
+
+        <!-- Resident of the Month Announcement -->
+        <div class="announcement">
+            <div class="announcement-header" id="residentAwardHeader">
+                <div class="announcement-title"><i class="fas fa-award" style="margin-right: 5px;"></i>Mount Sinai Resident of the Month</div>
+                <div class="announcement-icon"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="announcement-content" id="residentAwardContent" style="display: none;">
+                <p>Selected as Mount Sinai Hospital's Resident of the Month for service to patients/families (April 2025).</p>
+                <div class="award-image-container">
+                    <img src="https://i.postimg.cc/Cx8SFtXF/residentofthemonth.png" alt="Mount Sinai Resident of the Month Certificate" class="award-image">
+                </div>
+            </div>
         </div>
 
         <div class="section education-section">
@@ -2382,7 +2494,31 @@
             });
         });
     </script>
+    
+    <!-- Announcement toggle functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const residentAwardHeader = document.getElementById('residentAwardHeader');
+            const residentAwardContent = document.getElementById('residentAwardContent');
+            const iconElement = residentAwardHeader.querySelector('.announcement-icon');
+            
+            residentAwardHeader.addEventListener('click', function() {
+                residentAwardContent.classList.toggle('active');
+                iconElement.classList.toggle('active');
+                
+                // Set display style based on active state
+                if (residentAwardContent.classList.contains('active')) {
+                    residentAwardContent.style.display = 'block';
+                } else {
+                    // Wait for the transition to complete before hiding
+                    setTimeout(function() {
+                        if (!residentAwardContent.classList.contains('active')) {
+                            residentAwardContent.style.display = 'none';
+                        }
+                    }, 500);
+                }
+            });
+        });
+    </script>
 </body>
-</html>
-</html>
 </html>
